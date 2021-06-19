@@ -1,10 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
+import 'package:provider/provider.dart';
+import 'package:real_estates_app/screens/post_detail_screen.dart';
 
 import '../widgets/my_app_bar.dart';
 import '../screens/add_post_screen.dart';
-import '../screens/post_screen.dart';
+import '../screens/post_detail_screen.dart';
+// import '../screens/post_screen.dart';
 import '../models/post.dart';
+import '../providers/home_provier.dart';
 
 class ShowMoreScreen extends StatefulWidget {
   static const routeName = '/show_more_screen';
@@ -48,6 +52,8 @@ class _ShowMoreScreenState extends State<ShowMoreScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final _homeProvider = Provider.of<HomeProvider>(context, listen: false);
+    final user = _homeProvider.user;
     return Scaffold(
       appBar: MyAppBar(
         context: context,
@@ -58,7 +64,7 @@ class _ShowMoreScreenState extends State<ShowMoreScreen> {
         itemBuilder: (context, index) {
           return InkWell(
             onTap: () {
-              Navigator.of(context).pushNamed(PostScreen.routeName,
+              Navigator.of(context).pushNamed(PostDetailScreen.routName,
                   arguments: {'post': list[index]});
             },
             child: Container(
@@ -90,7 +96,7 @@ class _ShowMoreScreenState extends State<ShowMoreScreen> {
                       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Text('owner : ${list[index].userName}'),
+                        Text('owner : ${user.firstName} ${user.lastName}'),
                         Text(list[index].location),
                         Row(
                           mainAxisAlignment: MainAxisAlignment.spaceEvenly,

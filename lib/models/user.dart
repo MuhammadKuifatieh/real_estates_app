@@ -4,6 +4,13 @@ class User {
   String lastName;
   String email;
   String phone;
+  String profileImageUrl;
 
-  User({this.lastName, this.email, this.firstName, this.id, this.phone});
+  User(
+      {this.profileImageUrl,
+      this.lastName,
+      this.email,
+      this.firstName,
+      this.id,
+      this.phone});
 }

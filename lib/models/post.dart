@@ -3,19 +3,25 @@ class Post {
   final int userId;
   DateTime date;
   int likesCount;
-  int dislikesCount;
+  //int dislikesCount;
   String mainImageUrl;
   int houseId;
   String location;
-  String userName;
-  Post(
-      {this.id,
-      this.houseId,
-      this.date,
-      this.dislikesCount,
-      this.likesCount,
-      this.userId,
-      this.location,
-      this.mainImageUrl,
-      this.userName});
+  // String userName;
+  String saleOrRent;
+  String discription;
+  List<String> imageUrls;
+  Post({
+    this.id,
+    this.discription,
+    this.houseId,
+    this.date,
+    this.saleOrRent,
+    // this.dislikesCount,
+    this.likesCount,
+    this.userId,
+    this.location,
+    this.mainImageUrl,
+    this.imageUrls,
+  });
 }

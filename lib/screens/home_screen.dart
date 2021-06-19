@@ -28,7 +28,7 @@ class _HomeScreenState extends State<HomeScreen> {
         color: Colors.white,
         height: MediaQuery.of(context).size.height,
         width: MediaQuery.of(context).size.width,
-        padding: EdgeInsets.all(8),
+        // padding: EdgeInsets.all(8),
         child: ListView(
           children: [
             titleRow(text: 'Recent Posts', list: _recentList),
@@ -49,22 +49,28 @@ class _HomeScreenState extends State<HomeScreen> {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          Text(
-            text,
-            style: TextStyle(
-              color: Colors.black,
-              fontSize: 24,
-              fontWeight: FontWeight.bold,
+          Padding(
+            padding: const EdgeInsets.only(left: 10),
+            child: Text(
+              text,
+              style: TextStyle(
+                color: Colors.black,
+                fontSize: 24,
+                fontWeight: FontWeight.bold,
+              ),
             ),
           ),
-          TextButton(
-              onPressed: () {
-                Navigator.of(context).pushNamed(
-                  ShowMoreScreen.routeName,
-                  arguments: {'list': list, 'text': text},
-                );
-              },
-              child: Text('show more >>')),
+          Padding(
+            padding: const EdgeInsets.only(right: 10),
+            child: TextButton(
+                onPressed: () {
+                  Navigator.of(context).pushNamed(
+                    ShowMoreScreen.routeName,
+                    arguments: {'list': list, 'text': text},
+                  );
+                },
+                child: Text('show more >>')),
+          ),
         ],
       ),
     );
