@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../widgets/movie_detail_header.dart';
-import '../widgets/discription_widget.dart';
+import '../widgets/description_widget.dart';
 import '../widgets/photo_scroller.dart';
 //import '../widgets/actor_scroller.dart';
 import '../models/post.dart';
@@ -34,7 +34,7 @@ class _PostDetailScreenState extends State<PostDetailScreen> {
             MovieDetailHeader(post),
             Padding(
               padding: const EdgeInsets.all(20.0),
-              child: DiscriptionWidget(post.discription),
+              child: DescriptionWidget(post.description),
             ),
             PhotoScroller(post.imageUrls),
             SizedBox(height: 20.0),

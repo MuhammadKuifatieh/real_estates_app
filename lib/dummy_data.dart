@@ -8,7 +8,7 @@ var dummyRecent = [
     id: 1,
     mainImageUrl: 'assets/images/13.jpg',
     location: 'Boston - 1234 street',
-    discription:
+    description:
         'dkafjkajfkajflakjflkjfklaj kajfkjaflkj akdjfakjfj aldkjf ajldkjf aklj kjl ajkdj lajfkjd kjdalkjf kajdkljf kajlfj ',
     imageUrls: [
       'assets/images/18.jpg',
@@ -28,7 +28,7 @@ var dummyRecent = [
     mainImageUrl: 'assets/images/17.jpg',
     location: 'Miami - 1334 street',
     // userName: 'MOHAMMED',
-    discription:
+    description:
         'dkafjkajfkajflakjflkjfklaj kajfkjaflkj akdjfakjfj aldkjf ajldkjf aklj kjl ajkdj lajfkjd kjdalkjf kajdkljf kajlfj ',
     imageUrls: [
       'assets/images/18.jpg',
@@ -47,7 +47,7 @@ var dummyRecent = [
     mainImageUrl: 'assets/images/16.jpg',
     location: 'NewYork - 14 street',
     // userName: 'YOUSEF',
-    discription:
+    description:
         'dkafjkajfkajflakjflkjfklaj kajfkjaflkj akdjfakjfj aldkjf ajldkjf aklj kjl ajkdj lajfkjd kjdalkjf kajdkljf kajlfj ',
     imageUrls: [
       'assets/images/18.jpg',
@@ -66,7 +66,7 @@ var dummyRecent = [
     mainImageUrl: 'assets/images/14.jpg',
     location: 'Boston - 1234 street',
     // userName: 'HAITHAM',
-    discription:
+    description:
         'dkafjkajfkajflakjflkjfklaj kajfkjaflkj akdjfakjfj aldkjf ajldkjf aklj kjl ajkdj lajfkjd kjdalkjf kajdkljf kajlfj ',
     imageUrls: [
       'assets/images/18.jpg',
@@ -85,7 +85,7 @@ var dummyRecent = [
     mainImageUrl: 'assets/images/15.jpg',
     location: 'Boston - 1234 street',
     // userName: 'BRAYAN',
-    discription:
+    description:
         'dkafjkajfkajflakjflkjfklaj kajfkjaflkj akdjfakjfj aldkjf ajldkjf aklj kjl ajkdj lajfkjd kjdalkjf kajdkljf kajlfj ',
     imageUrls: [
       'assets/images/18.jpg',
@@ -104,7 +104,7 @@ var dummyRecent = [
     mainImageUrl: 'assets/images/13.jpg',
     location: 'Boston - 1234 street',
     // userName: 'MICHEALE',
-    discription:
+    description:
         'dkafjkajfkajflakjflkjfklaj kajfkjaflkj akdjfakjfj aldkjf ajldkjf aklj kjl ajkdj lajfkjd kjdalkjf kajdkljf kajlfj ',
     imageUrls: [
       'assets/images/18.jpg',
@@ -123,7 +123,7 @@ var dummyRecent = [
     mainImageUrl: 'assets/images/22.jpg',
     location: 'Boston - 1234 street',
     // userName: 'SHAHED',
-    discription:
+    description:
         'dkafjkajfkajflakjflkjfklaj kajfkjaflkj akdjfakjfj aldkjf ajldkjf aklj kjl ajkdj lajfkjd kjdalkjf kajdkljf kajlfj ',
     imageUrls: [
       'assets/images/18.jpg',
@@ -142,7 +142,7 @@ var dummyRecent = [
     mainImageUrl: 'assets/images/21.jpg',
     location: 'Boston - 1234 street',
     // userName: 'ELIZABITH',
-    discription:
+    description:
         'dkafjkajfkajflakjflkjfklaj kajfkjaflkj akdjfakjfj aldkjf ajldkjf aklj kjl ajkdj lajfkjd kjdalkjf kajdkljf kajlfj ',
     imageUrls: [
       'assets/images/18.jpg',
@@ -164,7 +164,7 @@ var dummyMostLikes = [
     mainImageUrl: 'assets/images/22.jpg',
     location: 'Boston - 1234 street',
     // userName: 'A7MED SI'
-    discription:
+    description:
         'dkafjkajfkajflakjflkjfklaj kajfkjaflkj akdjfakjfj aldkjf ajldkjf aklj kjl ajkdj lajfkjd kjdalkjf kajdkljf kajlfj ',
     imageUrls: [
       'assets/images/18.jpg',
@@ -183,7 +183,7 @@ var dummyMostLikes = [
     mainImageUrl: 'assets/images/13.jpg',
     location: 'Miami - 1334 street',
     // userName: 'MOHAMMED'
-    discription:
+    description:
         'dkafjkajfkajflakjflkjfklaj kajfkjaflkj akdjfakjfj aldkjf ajldkjf aklj kjl ajkdj lajfkjd kjdalkjf kajdkljf kajlfj ',
     imageUrls: [
       'assets/images/18.jpg',
@@ -202,7 +202,7 @@ var dummyMostLikes = [
     mainImageUrl: 'assets/images/14.jpg',
     location: 'NewYork - 14 street',
     // userName: 'YOUSEF'
-    discription:
+    description:
         'dkafjkajfkajflakjflkjfklaj kajfkjaflkj akdjfakjfj aldkjf ajldkjf aklj kjl ajkdj lajfkjd kjdalkjf kajdkljf kajlfj ',
     imageUrls: [
       'assets/images/18.jpg',
@@ -221,7 +221,7 @@ var dummyMostLikes = [
     mainImageUrl: 'assets/images/19.jpg',
     location: 'Boston - 1234 street',
     // userName: 'HAITHAM'
-    discription:
+    description:
         'dkafjkajfkajflakjflkjfklaj kajfkjaflkj akdjfakjfj aldkjf ajldkjf aklj kjl ajkdj lajfkjd kjdalkjf kajdkljf kajlfj ',
     imageUrls: [
       'assets/images/18.jpg',
@@ -240,7 +240,7 @@ var dummyMostLikes = [
     mainImageUrl: 'assets/images/23.jpg',
     location: 'Boston - 1234 street',
     // userName: 'BRAYAN'
-    discription:
+    description:
         'dkafjkajfkajflakjflkjfklaj kajfkjaflkj akdjfakjfj aldkjf ajldkjf aklj kjl ajkdj lajfkjd kjdalkjf kajdkljf kajlfj ',
     imageUrls: [
       'assets/images/18.jpg',
@@ -259,7 +259,7 @@ var dummyMostLikes = [
     mainImageUrl: 'assets/images/12.jpg',
     location: 'Boston - 1234 street',
     // userName: 'MICHEALE'
-    discription:
+    description:
         'dkafjkajfkajflakjflkjfklaj kajfkjaflkj akdjfakjfj aldkjf ajldkjf aklj kjl ajkdj lajfkjd kjdalkjf kajdkljf kajlfj ',
     imageUrls: [
       'assets/images/18.jpg',
@@ -278,7 +278,7 @@ var dummyMostLikes = [
     mainImageUrl: 'assets/images/22.jpg',
     location: 'Boston - 1234 street',
     // userName: 'SHAHED'
-    discription:
+    description:
         'dkafjkajfkajflakjflkjfklaj kajfkjaflkj akdjfakjfj aldkjf ajldkjf aklj kjl ajkdj lajfkjd kjdalkjf kajdkljf kajlfj ',
     imageUrls: [
       'assets/images/18.jpg',
@@ -297,7 +297,7 @@ var dummyMostLikes = [
     mainImageUrl: 'assets/images/21.jpg',
     location: 'Boston - 1234 street',
     // userName: 'ELIZABITH'
-    discription:
+    description:
         'dkafjkajfkajflakjflkjfklaj kajfkjaflkj akdjfakjfj aldkjf ajldkjf aklj kjl ajkdj lajfkjd kjdalkjf kajdkljf kajlfj ',
     imageUrls: [
       'assets/images/18.jpg',

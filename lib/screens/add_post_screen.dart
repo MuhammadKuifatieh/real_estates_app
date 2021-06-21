@@ -59,7 +59,9 @@ class _AddPostScreenState extends State<AddPostScreen> {
                       width: 1, color: Theme.of(context).primaryColor),
                 ),
                 child: (filePickerResult == null)
-                    ? Center(child: Icon(Icons.add, color: Theme.of(context).primaryColor))
+                    ? Center(
+                        child: Icon(Icons.add,
+                            color: Theme.of(context).primaryColor))
                     : Container(),
               ),
             ),

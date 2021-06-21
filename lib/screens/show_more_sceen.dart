@@ -9,6 +9,7 @@ import '../screens/post_detail_screen.dart';
 // import '../screens/post_screen.dart';
 import '../models/post.dart';
 import '../providers/home_provier.dart';
+import '../screens/new_post_screen.dart';
 
 class ShowMoreScreen extends StatefulWidget {
   static const routeName = '/show_more_screen';
@@ -134,7 +135,7 @@ class _ShowMoreScreenState extends State<ShowMoreScreen> {
       floatingActionButton: (!isScrollingDown)
           ? FloatingActionButton(
               onPressed: () {
-                Navigator.of(context).pushNamed(AddPostScreen.routeName);
+                Navigator.of(context).pushNamed(NewPostScreen.routName);
               },
               child: Icon(Icons.add),
             )

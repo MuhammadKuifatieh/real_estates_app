@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 
-class DiscriptionWidget extends StatelessWidget {
-  DiscriptionWidget(this.discription);
-  final String discription;
+class DescriptionWidget extends StatelessWidget {
+  DescriptionWidget(this.description);
+  final String description;
 
   @override
   Widget build(BuildContext context) {
@@ -19,7 +19,7 @@ class DiscriptionWidget extends StatelessWidget {
         ),
         SizedBox(height: 8.0),
         Text(
-          discription,
+          description,
           style: textTheme.bodyText2.copyWith(
             color: Colors.black45,
             fontSize: 16.0,

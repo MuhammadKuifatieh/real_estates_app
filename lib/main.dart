@@ -6,6 +6,7 @@ import './screens/home_screen.dart';
 import './screens/show_more_sceen.dart';
 import './screens/add_post_screen.dart';
 import './screens/post_detail_screen.dart';
+import './screens/new_post_screen.dart';
 import './providers/home_provier.dart';
 // import './models/movie_api.dart';
 
@@ -30,6 +31,7 @@ class MyApp extends StatelessWidget {
           ShowMoreScreen.routeName: (context) => ShowMoreScreen(),
           AddPostScreen.routeName: (context) => AddPostScreen(),
           PostDetailScreen.routName: (context) => PostDetailScreen(),
+          NewPostScreen.routName: (context) => NewPostScreen(),
         },
       ),
     );

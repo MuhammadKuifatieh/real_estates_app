@@ -9,11 +9,11 @@ class Post {
   String location;
   // String userName;
   String saleOrRent;
-  String discription;
+  String description;
   List<String> imageUrls;
   Post({
     this.id,
-    this.discription,
+    this.description,
     this.houseId,
     this.date,
     this.saleOrRent,
