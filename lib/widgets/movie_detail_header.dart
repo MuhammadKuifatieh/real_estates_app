@@ -83,8 +83,9 @@ class MovieDetailHeader extends StatelessWidget {
               ClipRRect(
                 borderRadius: BorderRadius.circular(15),
                 child: Image(
-                  height: 180,
-                  image: AssetImage(user.profileImageUrl),
+                  height: MediaQuery.of(context).size.width*0.5,
+                  width: MediaQuery.of(context).size.width*0.375 ,
+                  image: AssetImage('assets/images/profile.jpg'),
                   fit: BoxFit.cover,
                 ),
               ),

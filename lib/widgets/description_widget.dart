@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 
 class DescriptionWidget extends StatelessWidget {
-  DescriptionWidget(this.description);
-  final String description;
+  // DescriptionWidget(this.description);
+  final String description='This house is amazing \n It is located in the middle of the country and is close to the sea. It also has a spacious outdoor garden';
 
   @override
   Widget build(BuildContext context) {
@@ -13,7 +13,7 @@ class DescriptionWidget extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text(
-          'Discription',
+          'Description',
           style: textTheme.subtitle1
               .copyWith(fontSize: 20.0, fontWeight: FontWeight.bold),
         ),

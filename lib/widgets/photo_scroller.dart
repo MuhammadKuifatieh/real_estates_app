@@ -5,7 +5,7 @@ class PhotoScroller extends StatelessWidget {
   final List<String> photoUrls;
 
   Widget _buildPhoto(BuildContext context, int index) {
-    var photo = photoUrls[index];
+    var photo = 'assets/images/room${index+1}.jpg';
 
     return Padding(
       padding: const EdgeInsets.only(right: 16.0),

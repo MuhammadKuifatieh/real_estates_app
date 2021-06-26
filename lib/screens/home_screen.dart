@@ -1,3 +1,4 @@
+import 'package:curved_navigation_bar/curved_navigation_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -39,6 +40,34 @@ class _HomeScreenState extends State<HomeScreen> {
             PostList(list: _nearYouPosts),
           ],
         ),
+      ),
+      bottomNavigationBar: CurvedNavigationBar(
+        height: 47,
+        items: [
+          Icon(
+            Icons.person,
+            color: Colors.white,
+          ),
+          Icon(
+            Icons.favorite,
+            color: Colors.white,
+          ),
+          Icon(
+            Icons.home,
+            color: Colors.white,
+          ),
+          Icon(
+            Icons.post_add,
+            color: Colors.white,
+          ),
+          Icon(
+            Icons.radio_button_on_sharp,
+            color: Colors.white,
+          ),
+        ],
+        buttonBackgroundColor: Colors.blue,
+        backgroundColor: Colors.transparent,
+        color: Colors.blue,
       ),
     );
   }
