@@ -7,7 +7,7 @@ import '../widgets/photo_scroller.dart';
 import '../models/post.dart';
 
 class PostDetailScreen extends StatefulWidget {
-  static String routName = '/post-detail';
+  static String routeName = '/post-detail';
 
   @override
   _PostDetailScreenState createState() => _PostDetailScreenState();

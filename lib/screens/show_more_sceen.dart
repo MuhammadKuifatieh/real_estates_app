@@ -65,7 +65,7 @@ class _ShowMoreScreenState extends State<ShowMoreScreen> {
         itemBuilder: (context, index) {
           return InkWell(
             onTap: () {
-              Navigator.of(context).pushNamed(PostDetailScreen.routName,
+              Navigator.of(context).pushNamed(PostDetailScreen.routeName,
                   arguments: {'post': list[index]});
             },
             child: Container(
@@ -135,7 +135,7 @@ class _ShowMoreScreenState extends State<ShowMoreScreen> {
       floatingActionButton: (!isScrollingDown)
           ? FloatingActionButton(
               onPressed: () {
-                Navigator.of(context).pushNamed(NewPostScreen.routName);
+                Navigator.of(context).pushNamed(NewPostScreen.routeName);
               },
               child: Icon(Icons.add),
             )

@@ -21,7 +21,7 @@ class PostList extends StatelessWidget {
         return InkWell(
           onTap: () {
             Navigator.of(context).pushNamed(
-              PostDetailScreen.routName,
+              PostDetailScreen.routeName,
               arguments: {
                 'post': list[index],
               },

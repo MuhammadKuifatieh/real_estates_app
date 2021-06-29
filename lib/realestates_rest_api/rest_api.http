@@ -1,0 +1,39 @@
+
+@accesToken = 
+
+
+POST http://127.0.0.1:8000/api/auth/register
+Content-Type: application/json
+Accept: application/json
+
+{
+    "name" : "ASI",
+    "phone": "0949096735",
+    "gender":"male",
+    "dateOfBirth":"1999-01-22",
+    "email":"a7madsi16@gmail.com",
+    "password":"test1234",
+    "c_password":"test1234"
+}
+
+###
+
+POST http://127.0.0.1:8000/api/auth/login
+Content-Type: application/json
+Accept: application/json
+
+{
+    "email":"a7madsi14@gmail.com",
+    "password":"test1234"
+}
+
+###
+
+GET  http://127.0.0.1:8000/api/auth/details
+Content-Type: application/json
+Accept: application/json
+Authorization: Bearer {{accesToken}}
+
+
+###
+

@@ -8,7 +8,7 @@ import '../widgets/post_list.dart';
 import '../providers/home_provier.dart';
 
 class HomeScreen extends StatefulWidget {
-  static const routeName = '/home_screen';
+  static const routeName = '/home';
   @override
   _HomeScreenState createState() => _HomeScreenState();
 }

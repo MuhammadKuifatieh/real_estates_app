@@ -4,6 +4,7 @@ import '../widgets/sing_up.dart';
 import '../utils/bubble_indicator_painter.dart';
 
 class LoginScreen extends StatefulWidget {
+  static const routeName = '/auth';
   const LoginScreen({Key key}) : super(key: key);
 
   @override
@@ -32,9 +33,7 @@ class _LoginScreenState extends State<LoginScreen>
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        body: SingleChildScrollView(
-      physics: const ClampingScrollPhysics(),
-      child: GestureDetector(
+      body: GestureDetector(
         onTap: () {
           FocusScope.of(context).requestFocus(FocusNode());
         },
@@ -49,57 +48,61 @@ class _LoginScreenState extends State<LoginScreen>
                 stops: <double>[0.0, 1.0],
                 tileMode: TileMode.clamp),
           ),
-          child: Column(
-            mainAxisSize: MainAxisSize.max,
-            children: <Widget>[
-              Padding(
-                padding: const EdgeInsets.only(top: 75.0),
-                child: Image(
-                    height:
-                        MediaQuery.of(context).size.height > 800 ? 191.0 : 150,
-                    fit: BoxFit.fill,
-                    image: const AssetImage('assets/images/login_logo.png')),
-              ),
-              Padding(
-                padding: const EdgeInsets.only(top: 20.0),
-                child: _buildMenuBar(context),
-              ),
-              Expanded(
-                flex: 2,
-                child: PageView(
-                  controller: _pageController,
-                  physics: const ClampingScrollPhysics(),
-                  onPageChanged: (int i) {
-                    FocusScope.of(context).requestFocus(FocusNode());
-                    if (i == 0) {
-                      setState(() {
-                        right = Colors.white;
-                        left = Colors.black;
-                      });
-                    } else if (i == 1) {
-                      setState(() {
-                        right = Colors.black;
-                        left = Colors.white;
-                      });
-                    }
-                  },
-                  children: <Widget>[
-                    ConstrainedBox(
-                      constraints: const BoxConstraints.expand(),
-                      child: const SignIn(),
-                    ),
-                    ConstrainedBox(
-                      constraints: const BoxConstraints.expand(),
-                      child: const SignUp(),
-                    ),
-                  ],
+          child: SingleChildScrollView(
+            child: Column(
+              mainAxisSize: MainAxisSize.max,
+              children: <Widget>[
+                Padding(
+                  padding: const EdgeInsets.only(top: 75.0),
+                  child: Image(
+                      height: MediaQuery.of(context).size.height > 800
+                          ? 191.0
+                          : 150,
+                      fit: BoxFit.fill,
+                      image: const AssetImage('assets/images/login_logo.png')),
                 ),
-              ),
-            ],
+                Padding(
+                  padding: const EdgeInsets.only(top: 20.0),
+                  child: _buildMenuBar(context),
+                ),
+                Container(
+                  // flex: 2,
+                  height: MediaQuery.of(context).size.height,
+                  child: PageView(
+                    controller: _pageController,
+                    physics: const ClampingScrollPhysics(),
+                    onPageChanged: (int i) {
+                      FocusScope.of(context).requestFocus(FocusNode());
+                      if (i == 0) {
+                        setState(() {
+                          right = Colors.white;
+                          left = Colors.black;
+                        });
+                      } else if (i == 1) {
+                        setState(() {
+                          right = Colors.black;
+                          left = Colors.white;
+                        });
+                      }
+                    },
+                    children: <Widget>[
+                      ConstrainedBox(
+                        constraints: const BoxConstraints.expand(),
+                        child: const SignIn(),
+                      ),
+                      ConstrainedBox(
+                        constraints: const BoxConstraints.expand(),
+                        child: const SignUp(),
+                      ),
+                    ],
+                  ),
+                ),
+              ],
+            ),
           ),
         ),
       ),
-    ));
+    );
   }
 
   Widget _buildMenuBar(BuildContext context) {
