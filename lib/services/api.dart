@@ -1,7 +1,7 @@
 //im_port 'package:flutter/foundation.dart';
 
 class API {
-  final _host = '192.168.1.9';
+  final _host = '192.168.137.1';
   final _port = 8000;
 
   Uri authUri(String auth) => Uri(

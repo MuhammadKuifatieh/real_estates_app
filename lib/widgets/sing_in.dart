@@ -56,6 +56,9 @@ class _SignInState extends State<SignIn> {
     } on HttpException catch (error) {
       _showAuthDialog(error.message);
     }
+    catch(e){
+      _showAuthDialog('please check you internet connection.');
+    }
     setState(() {
       isLoading = false;
     });

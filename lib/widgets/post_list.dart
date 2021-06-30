@@ -37,7 +37,7 @@ class PostList extends StatelessWidget {
         );
       },
       options: CarouselOptions(
-        height: 350,
+        height: MediaQuery.of(context).size.width,
         viewportFraction: 0.69,
         enableInfiniteScroll: false,
         autoPlay: true,

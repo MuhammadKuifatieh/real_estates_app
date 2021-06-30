@@ -1,7 +1,12 @@
+import 'dart:io';
+
+import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+
 import '../widgets/my_app_bar.dart';
 import '../widgets/drop_down_card.dart';
+import '../services/image_getter.dart';
 
 class NewPostScreen extends StatefulWidget {
   static const routeName = '/new-post';
@@ -13,6 +18,12 @@ class _NewPostScreenState extends State<NewPostScreen> {
   final _priceController = TextEditingController();
   final _latController = TextEditingController();
   final _longController = TextEditingController();
+  Size size;
+  Color primaryColor;
+  List<FilePickerResult> images = [];
+  List<String> urlImages = [];
+  FilePickerResult image;
+  String urlMain;
   @override
   void dispose() {
     _priceController.dispose();
@@ -24,6 +35,13 @@ class _NewPostScreenState extends State<NewPostScreen> {
   @override
   void initState() {
     super.initState();
+  }
+
+  @override
+  void didChangeDependencies() {
+    size = MediaQuery.of(context).size;
+    primaryColor = Theme.of(context).primaryColor;
+    super.didChangeDependencies();
   }
 
   @override
@@ -115,7 +133,7 @@ class _NewPostScreenState extends State<NewPostScreen> {
                 ),
                 Center(
                   child: Container(
-                    width: MediaQuery.of(context).size.width * 0.9,
+                    width: size.width * 0.9,
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
@@ -138,7 +156,7 @@ class _NewPostScreenState extends State<NewPostScreen> {
                 Center(
                   child: Container(
                     alignment: Alignment.centerLeft,
-                    width: MediaQuery.of(context).size.width * 0.9,
+                    width: size.width * 0.9,
                     child: TextButton(
                       style: TextButton.styleFrom(
                         textStyle: TextStyle(
@@ -167,7 +185,7 @@ class _NewPostScreenState extends State<NewPostScreen> {
                 ),
                 Center(
                   child: Container(
-                    // height: MediaQuery.of(context).size.height * 0.4,
+                    // height: size.height * 0.4,
                     child: customTextField(
                       label: 'Description',
                       name: 'description',
@@ -192,7 +210,7 @@ class _NewPostScreenState extends State<NewPostScreen> {
                 Center(
                   child: Container(
                     alignment: Alignment.centerLeft,
-                    width: MediaQuery.of(context).size.width * 0.9,
+                    width: size.width * 0.9,
                     child: TextButton(
                       onPressed: () {},
                       child: Text('Estimate your house price'),
@@ -205,12 +223,167 @@ class _NewPostScreenState extends State<NewPostScreen> {
                     ),
                   ),
                 ),
+                Center(
+                  child: Container(
+                    width: size.width * 0.9,
+                    child: Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            "Main Image:",
+                            style: TextStyle(
+                              color: Colors.blueGrey,
+                              fontWeight: FontWeight.w400,
+                              fontSize: 18,
+                            ),
+                          ),
+                          Center(
+                            child: GestureDetector(
+                              onTap: () async {
+                                FilePickerResult result =
+                                    await ImageGetter().getImage();
+                                String url;
+                                if (result != null)
+                                  url =
+                                      await ImageGetter().uploadImageToFirebase(
+                                    context: context,
+                                    pickedFile: result,
+                                    folderName: 'Main House Images',
+                                  );
+                                setState(
+                                  () {
+                                    if (result != null) {
+                                      image = result;
+                                      urlMain = url;
+                                    }
+                                  },
+                                );
+                              },
+                              child: Container(
+                                width: size.width * 0.8,
+                                height: size.width * 0.8,
+                                margin: EdgeInsets.all(8),
+                                padding: EdgeInsets.all(
+                                    (image == null) ? size.width * 0.25 : 0),
+                                decoration: BoxDecoration(
+                                  border: (image == null)
+                                      ? Border.all(
+                                          width: 1,
+                                          color: primaryColor,
+                                        )
+                                      : null,
+                                  image: (image != null)
+                                      ? DecorationImage(
+                                          image: Image.file(
+                                            File(
+                                              image.files.first.path,
+                                            ),
+                                          ).image,
+                                          fit: BoxFit.cover,
+                                        )
+                                      : null,
+                                  borderRadius: BorderRadius.circular(15),
+                                ),
+                                child: (image == null)
+                                    ? Icon(
+                                        Icons.add,
+                                        color: primaryColor,
+                                      )
+                                    : Container(),
+                              ),
+                            ),
+                          ),
+                          Text(
+                            'Room Images:',
+                            style: TextStyle(
+                                color: Colors.blueGrey,
+                                fontWeight: FontWeight.w400,
+                                fontSize: 18),
+                          ),
+                          Container(
+                            height: 175,
+                            width: size.width * .8,
+                            child: GridView.builder(
+                              scrollDirection: Axis.horizontal,
+                              gridDelegate:
+                                  SliverGridDelegateWithFixedCrossAxisCount(
+                                      crossAxisCount: 1),
+                              itemBuilder: (_, index) {
+                                return Center(
+                                  child: (images.length - 1 < index)
+                                      ? GestureDetector(
+                                          onTap: () async {
+                                            FilePickerResult filePickerResult =
+                                                await ImageGetter().getImage();
+                                            String url;
+                                            if (filePickerResult != null)
+                                              url = await ImageGetter()
+                                                  .uploadImageToFirebase(
+                                                context: context,
+                                                pickedFile: filePickerResult,
+                                                folderName: 'Room Images',
+                                              );
+                                            setState(() {
+                                              if (filePickerResult != null) {
+                                                images.add(filePickerResult);
+                                                urlImages.add(url);
+                                              }
+                                            });
+                                          },
+                                          child: Container(
+                                            margin: EdgeInsets.all(8),
+                                            padding: EdgeInsets.all(
+                                                size.width * 0.2),
+                                            decoration: BoxDecoration(
+                                              border: Border.all(
+                                                width: 1,
+                                                color: primaryColor,
+                                              ),
+                                              borderRadius:
+                                                  BorderRadius.circular(15),
+                                            ),
+                                            child: Center(
+                                              child: Icon(
+                                                Icons.add,
+                                                color: primaryColor,
+                                              ),
+                                            ),
+                                          ),
+                                        )
+                                      : Container(
+                                          margin: EdgeInsets.all(8),
+                                          decoration: BoxDecoration(
+                                            image: DecorationImage(
+                                              image: Image.file(
+                                                File(
+                                                  images[index]
+                                                      .files
+                                                      .first
+                                                      .path,
+                                                ),
+                                              ).image,
+                                              fit: BoxFit.cover,
+                                            ),
+                                          ),
+                                        ),
+                                );
+                              },
+                              itemCount: images.length + 1,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+                ),
                 SizedBox(
                   height: 16,
                 ),
                 Center(
                   child: Container(
-                    width: MediaQuery.of(context).size.width * 0.5,
+                    width: size.width * 0.5,
                     height: 50,
                     child: ElevatedButton(
                       onPressed: () {},
