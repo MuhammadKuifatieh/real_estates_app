@@ -2,10 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import '../models/user.dart';
-import '../screens/show_more_sceen.dart';
+import '../screens/new_post_screen.dart';
 import '../widgets/post_list.dart';
 import '../widgets/profile_clipper.dart';
 import '../providers/home_provier.dart';
+import '../providers/auth.dart';
 
 class ProfileScreen extends StatefulWidget {
   @override
@@ -89,6 +90,25 @@ class _ProfileScreenState extends State<ProfileScreen> {
               ),
             ),
             SizedBox(height: 5.0),
+            Align(
+              alignment: Alignment.bottomRight,
+              child: Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: ElevatedButton(
+                  style: ButtonStyle(
+                      backgroundColor: MaterialStateProperty.all(
+                          Theme.of(context).errorColor),
+                      elevation: MaterialStateProperty.all(10)),
+                  onPressed: () {
+                    Provider.of<Auth>(context,listen: false).logOut();
+                  },
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [Text('Log Out'), Icon(Icons.exit_to_app)],
+                  ),
+                ),
+              ),
+            )
           ],
         ),
       ),
@@ -117,11 +137,11 @@ class _ProfileScreenState extends State<ProfileScreen> {
             child: TextButton(
                 onPressed: () {
                   Navigator.of(context).pushNamed(
-                    ShowMoreScreen.routeName,
+                    NewPostScreen.routeName,
                     arguments: {'title': text},
                   );
                 },
-                child: Text('show more >>')),
+                child: Text('add new Post >>')),
           ),
         ],
       ),

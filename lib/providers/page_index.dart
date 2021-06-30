@@ -21,6 +21,7 @@ class PageIndex with ChangeNotifier {
   ];
   Widget get page => pages[_pageIndex];
   String get tilte => titles[_pageIndex];
+  int get pageIndex => _pageIndex;
   setPageIndex(int newIndex) {
     _pageIndex = newIndex;
     notifyListeners();

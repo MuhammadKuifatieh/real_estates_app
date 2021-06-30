@@ -53,6 +53,7 @@ class _MainScreenState extends State<MainScreen> {
             text: 'Profile',
           )
         ],
+        selectedIndex:Provider.of<PageIndex>(context).pageIndex ,
         onTabChange: (index) {
           Provider.of<PageIndex>(context,listen: false).setPageIndex(index);
         },
