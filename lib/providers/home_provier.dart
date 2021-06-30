@@ -15,8 +15,8 @@ class HomeProvider with ChangeNotifier {
   HomeProvider(this.token, this._recentPosts, this.lastPage);
   int lastPage;
   var _recentPosts;
-  var _mostLikedPosts = dummyMostLikes;
-  var _nearYouPosts = dummyRecent;
+  var _mostLikedPosts ;
+  var _nearYouPosts ;
   final apiService = APIService();
   // final User user = User(
   //   email: 'a7madsi15@gmail.com',
@@ -27,8 +27,8 @@ class HomeProvider with ChangeNotifier {
   //   profileImageUrl: 'assets/images/22.jpg',
   // );
   List<House> get recentPosts => [..._recentPosts];
-  List<Post> get mostLikedPosts => [..._mostLikedPosts];
-  List<Post> get nearYouPosts => [..._nearYouPosts];
+  List<House> get mostLikedPosts => [..._recentPosts];
+  List<House> get nearYouPosts => [..._recentPosts];
 
   Future<void> fetchNewPage(
       int pageKey, PagingController<int, House> pagingController) async {

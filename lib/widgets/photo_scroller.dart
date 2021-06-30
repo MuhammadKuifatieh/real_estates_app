@@ -5,14 +5,13 @@ class PhotoScroller extends StatelessWidget {
   final List<String> photoUrls;
 
   Widget _buildPhoto(BuildContext context, int index) {
-    var photo = 'assets/images/room${index+1}.jpg';
 
     return Padding(
       padding: const EdgeInsets.only(right: 16.0),
       child: ClipRRect(
         borderRadius: BorderRadius.circular(4.0),
-        child: Image.asset(
-          photo,
+        child: Image.network(
+          photoUrls[index],
           width: 160.0,
           height: 120.0,
           fit: BoxFit.cover,

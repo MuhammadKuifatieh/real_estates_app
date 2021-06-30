@@ -47,10 +47,11 @@ class MovieDetailHeader extends StatelessWidget {
           height: 4.0,
         ),
         Text(
-          house.price.toString(),
+         'Price : \$${house.price.toString()} ',
           style: TextStyle(
             fontSize: 16,
-            color: Colors.black,
+            color: Theme.of(context).primaryColor,
+            fontWeight: FontWeight.bold,
           ),
         ),
         SizedBox(height: 9.0),
@@ -86,7 +87,7 @@ class MovieDetailHeader extends StatelessWidget {
                 child: Image(
                   height: MediaQuery.of(context).size.width * 0.5,
                   width: MediaQuery.of(context).size.width * 0.375,
-                  image: AssetImage('assets/images/profile.jpg'),
+                  image: NetworkImage(house.user.image),
                   fit: BoxFit.cover,
                 ),
               ),

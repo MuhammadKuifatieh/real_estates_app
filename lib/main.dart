@@ -12,6 +12,7 @@ import './screens/login_screen.dart';
 import './providers/home_provier.dart';
 import './providers/auth.dart';
 import './providers/page_index.dart';
+import './screens/comment_screen.dart';
 import './screens/main_screen.dart';
 // import './models/movie_api.dart';
 
@@ -68,6 +69,7 @@ class MyApp extends StatelessWidget {
             AddPostScreen.routeName: (context) => AddPostScreen(),
             PostDetailScreen.routeName: (context) => PostDetailScreen(),
             NewPostScreen.routeName: (context) => NewPostScreen(),
+            CommentScreen.routeName: (context) => CommentScreen(),
           },
         ),
       ),

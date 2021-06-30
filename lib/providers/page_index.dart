@@ -9,14 +9,14 @@ class PageIndex with ChangeNotifier {
   int _pageIndex = 0;
   List<Widget> pages = [
     HomeScreen(),
-    SearchScren(),
     LikesScreen(),
+    SearchScreen(),
     ProfileScreen(),
   ];
   List<String> titles = [
     'Home',
-    'Search',
     'Likes',
+    'Search',
     'profile',
   ];
   Widget get page => pages[_pageIndex];

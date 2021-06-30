@@ -6,6 +6,7 @@ import '../widgets/photo_scroller.dart';
 //import '../widgets/actor_scroller.dart';
 // import '../models/post.dart';
 import '../models/house.dart';
+import '../screens/comment_screen.dart';
 
 class PostDetailScreen extends StatefulWidget {
   static String routeName = '/post-detail';
@@ -49,24 +50,30 @@ class _PostDetailScreenState extends State<PostDetailScreen> {
                   children: [
                     Expanded(
                       flex: 1,
-                      child: Container(
-                        height: 50,
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(50),
-                          boxShadow: [
-                            BoxShadow(
-                              blurRadius: 8.0,
-                              spreadRadius: 1,
-                              color: Colors.black38,
-                              offset: Offset(0, 2),
+                      child: GestureDetector(
+                        onTap: () {
+                          Navigator.of(context)
+                              .pushNamed(CommentScreen.routeName);
+                        },
+                        child: Container(
+                          height: 50,
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(50),
+                            boxShadow: [
+                              BoxShadow(
+                                blurRadius: 8.0,
+                                spreadRadius: 1,
+                                color: Colors.black38,
+                                offset: Offset(0, 2),
+                              ),
+                            ],
+                            color: Theme.of(context).primaryColor,
+                          ),
+                          child: Center(
+                            child: Text(
+                              'Show Comments',
+                              style: TextStyle(color: Colors.white),
                             ),
-                          ],
-                          color: Theme.of(context).primaryColor,
-                        ),
-                        child: Center(
-                          child: Text(
-                            'Show Comments',
-                            style: TextStyle(color: Colors.white),
                           ),
                         ),
                       ),
@@ -80,6 +87,13 @@ class _PostDetailScreenState extends State<PostDetailScreen> {
                       onPressed: () {
                         setState(() {});
                       },
+                    ),
+                    Text(
+                      house.countlikes.toString(),
+                      style: TextStyle(
+                        fontWeight: FontWeight.bold,
+                        fontSize: 18,
+                      ),
                     ),
                   ],
                 ),

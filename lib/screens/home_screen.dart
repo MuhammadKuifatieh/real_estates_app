@@ -42,13 +42,23 @@ class _HomeScreenState extends State<HomeScreen> {
                     return ListView(
                       children: [
                         titleRow(
-                            text: 'Recent Posts',
-                            list: homeProvider.recentPosts),
-                        PostList(list: homeProvider.recentPosts),
-                        // titleRow(text: 'Most Likes', list: homeProvider.recentPosts),
-                        // PostList(list: _mostLikedPosts),
-                        // titleRow(text: 'Near You', list: homeProvider.recentPosts),
-                        // PostList(list: _nearYouPosts),
+                          text: 'Recent Posts',
+                          list: homeProvider.recentPosts,
+                        ),
+                        PostList(
+                          list: homeProvider.recentPosts,
+                        ),
+                        titleRow(
+                            text: 'Most Likes',
+                            list: homeProvider.mostLikedPosts),
+                        PostList(
+                          list: homeProvider.mostLikedPosts,
+                        ),
+                        titleRow(
+                          text: 'Near You',
+                          list: homeProvider.nearYouPosts,
+                        ),
+                        PostList(list: homeProvider.nearYouPosts),
                       ],
                     );
                   },
