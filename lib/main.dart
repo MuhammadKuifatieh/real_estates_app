@@ -29,7 +29,16 @@ class MyApp extends StatelessWidget {
       providers: [
         ChangeNotifierProvider<PageIndex>(create: (_) => PageIndex()),
         ChangeNotifierProvider<Auth>(create: (_) => Auth()),
-        ChangeNotifierProvider<HomeProvider>(create: (_) => HomeProvider()),
+        ChangeNotifierProxyProvider<Auth, HomeProvider>(
+          create: (_) => HomeProvider('', [], 0),
+          update: (_, auth, previousHomeProvider) {
+            return HomeProvider(
+              auth.token,
+              previousHomeProvider.recentPosts ?? [],
+              previousHomeProvider.lastPage,
+            );
+          },
+        ),
       ],
       child: Consumer<Auth>(
         builder: (context, auth, _) => MaterialApp(
@@ -38,21 +47,20 @@ class MyApp extends StatelessWidget {
           theme: ThemeData(
             primarySwatch: Colors.blue,
           ),
-          home: auth.isAuth
-              ? MainScreen()
-              : FutureBuilder(
-                  future: auth.autoLogIn(),
-                  builder: (context, snapshot) {
-                    if (snapshot.connectionState == ConnectionState.waiting)
-                      return Center(
-                        child: CircularProgressIndicator(
-                          backgroundColor: Colors.blue,
-                        ),
-                      );
-                    else
-                      return LoginScreen();
-                  },
-                ),
+          home: auth.isAuth ? MainScreen() : LoginScreen(),
+          // : FutureBuilder(
+          //     future: auth.autoLogIn(),
+          //     builder: (context, snapshot) {
+          //       if (snapshot.connectionState == ConnectionState.waiting)
+          //         return Center(
+          //           child: CircularProgressIndicator(
+          //             backgroundColor: Colors.blue,
+          //           ),
+          //         );
+          //       else
+          //         return LoginScreen();
+          //     },
+          //   ),
           routes: {
             HomeScreen.routeName: (context) => HomeScreen(),
             // PostScreen.routeName: (context) => PostScreen(),

@@ -3,14 +3,15 @@ import 'package:provider/provider.dart';
 
 import 'arc_banner_image.dart';
 import '../providers/home_provier.dart';
-import '../models/post.dart';
+//import '../models/post.dart';
+import '../models/house.dart';
 // import '../models/models.dart';
 // import 'poster.dart';
 // import 'rating_information.dart';
 
 class MovieDetailHeader extends StatelessWidget {
-  MovieDetailHeader(this.post);
-  final Post post;
+  MovieDetailHeader(this.house);
+  final House house;
 
   // List<Widget> _buildCategoryChips(TextTheme textTheme) {
   //   return movie.categories.map((category) {
@@ -28,14 +29,14 @@ class MovieDetailHeader extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final _homeProvider = Provider.of<HomeProvider>(context, listen: false);
-    var user = _homeProvider.user;
+    // var user = _homeProvider.user;
     var textTheme = Theme.of(context).textTheme;
 
     var movieInformation = Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text(
-          '${user.firstName} ${user.lastName}',
+          house.user.name,
           style: TextStyle(
             fontSize: 24,
             color: Colors.black,
@@ -46,7 +47,7 @@ class MovieDetailHeader extends StatelessWidget {
           height: 4.0,
         ),
         Text(
-          post.saleOrRent,
+          house.price.toString(),
           style: TextStyle(
             fontSize: 16,
             color: Colors.black,
@@ -58,7 +59,7 @@ class MovieDetailHeader extends StatelessWidget {
         Padding(
           padding: const EdgeInsets.only(right: 8.0),
           child: Chip(
-            label: Text(post.location),
+            label: Text(house.streetAddress),
             labelStyle: textTheme.caption,
             backgroundColor: Colors.black12,
           ),
@@ -70,7 +71,7 @@ class MovieDetailHeader extends StatelessWidget {
       children: [
         Padding(
           padding: const EdgeInsets.only(bottom: 140.0),
-          child: ArcBannerImage(post.mainImageUrl),
+          child: ArcBannerImage(house.baseImage),
         ),
         Positioned(
           bottom: 0.0,
@@ -83,8 +84,8 @@ class MovieDetailHeader extends StatelessWidget {
               ClipRRect(
                 borderRadius: BorderRadius.circular(15),
                 child: Image(
-                  height: MediaQuery.of(context).size.width*0.5,
-                  width: MediaQuery.of(context).size.width*0.375 ,
+                  height: MediaQuery.of(context).size.width * 0.5,
+                  width: MediaQuery.of(context).size.width * 0.375,
                   image: AssetImage('assets/images/profile.jpg'),
                   fit: BoxFit.cover,
                 ),

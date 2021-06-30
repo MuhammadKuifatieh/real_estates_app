@@ -4,7 +4,8 @@ import '../widgets/movie_detail_header.dart';
 import '../widgets/description_widget.dart';
 import '../widgets/photo_scroller.dart';
 //import '../widgets/actor_scroller.dart';
-import '../models/post.dart';
+// import '../models/post.dart';
+import '../models/house.dart';
 
 class PostDetailScreen extends StatefulWidget {
   static String routeName = '/post-detail';
@@ -15,7 +16,7 @@ class PostDetailScreen extends StatefulWidget {
 
 class _PostDetailScreenState extends State<PostDetailScreen> {
   Map<String, dynamic> argArray;
-  Post post;
+  House house;
   bool flag;
 
   @override
@@ -23,7 +24,7 @@ class _PostDetailScreenState extends State<PostDetailScreen> {
     flag = false;
     argArray =
         ModalRoute.of(context).settings.arguments as Map<String, dynamic>;
-    post = argArray['post'];
+    house = argArray['house'];
     super.didChangeDependencies();
   }
 
@@ -33,12 +34,12 @@ class _PostDetailScreenState extends State<PostDetailScreen> {
       body: SingleChildScrollView(
         child: Column(
           children: [
-            MovieDetailHeader(post),
+            MovieDetailHeader(house),
             Padding(
               padding: const EdgeInsets.all(20.0),
               child: DescriptionWidget(),
             ),
-            PhotoScroller(post.imageUrls),
+            PhotoScroller(house.otherImage),
             SizedBox(height: 20.0),
             // ActorScroller(movie.actors),
             Padding(

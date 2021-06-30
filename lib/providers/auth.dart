@@ -3,8 +3,8 @@ import 'dart:developer';
 import 'dart:io';
 
 import 'package:flutter/foundation.dart';
-import 'package:flutter/services.dart';
-import 'package:shared_preferences/shared_preferences.dart';
+// import 'package:flutter/services.dart';
+// import 'package:shared_preferences/shared_preferences.dart';
 
 import '../services/api_service.dart';
 
@@ -25,17 +25,17 @@ class Auth with ChangeNotifier {
       throw HttpException('Authorization failed please try again later');
     _token = json.decode(response.body)['success']['token'];
     notifyListeners();
-    final prefs = await SharedPreferences.getInstance();
-    prefs.setString('token', _token);
+    // final prefs = await SharedPreferences.getInstance();
+    // prefs.setString('token', _token);
   }
 
-  Future<bool> autoLogIn() async {
-    final prefs = await SharedPreferences.getInstance();
-    if (!prefs.containsKey('token')) return false;
-    _token = prefs.getString('token');
-    notifyListeners();
-    return true;
-  }
+  // Future<bool> autoLogIn() async {
+  //   final prefs = await SharedPreferences.getInstance();
+  //   if (!prefs.containsKey('token')) return false;
+  //   _token = prefs.getString('token');
+  //   notifyListeners();
+  //   return true;
+  // }
 
   Future<void> logIn({
     @required String email,
@@ -46,7 +46,7 @@ class Auth with ChangeNotifier {
       throw HttpException('Authorization failed please try again later');
     _token = json.decode(response.body)['success']['token'];
     notifyListeners();
-    final prefs = await SharedPreferences.getInstance();
-    prefs.setString('token', _token);
+    // final prefs = await SharedPreferences.getInstance();
+    // prefs.setString('token', _token);
   }
 }

@@ -1,3 +1,4 @@
+import 'package:curved_navigation_bar/curved_navigation_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -16,29 +17,47 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
     final _homeProvider = Provider.of<HomeProvider>(context, listen: false);
-    final _recentList = _homeProvider.recentPosts;
+    // final _recentList = _homeProvider.recentPosts;
     final _mostLikedPosts = _homeProvider.mostLikedPosts;
     final _nearYouPosts = _homeProvider.nearYouPosts;
     return Scaffold(
-      body: Container(
-        color: Colors.white,
-        height: MediaQuery.of(context).size.height,
-        width: MediaQuery.of(context).size.width,
-        // padding: EdgeInsets.all(8),
-        child: ListView(
-          children: [
-            titleRow(text: 'Recent Posts', list: _recentList),
-            PostList(list: _recentList),
-            titleRow(text: 'Most Likes', list: _recentList),
-            PostList(list: _mostLikedPosts),
-            titleRow(text: 'Near You', list: _recentList),
-            PostList(list: _nearYouPosts),
-          ],
-        ),
-      ),
+      body: FutureBuilder(
+          future: Provider.of<HomeProvider>(context, listen: false)
+              .fetchFirstPage(),
+          builder: (context, snapshot) {
+            if (snapshot.connectionState == ConnectionState.waiting)
+              return Center(
+                child: CircularProgressIndicator(
+                  backgroundColor: Colors.blue,
+                ),
+              );
+            else
+              return Container(
+                color: Colors.white,
+                height: MediaQuery.of(context).size.height,
+                width: MediaQuery.of(context).size.width,
+                // padding: EdgeInsets.all(8),
+                child: Consumer<HomeProvider>(
+                  builder: (context, homeProvider, _) {
+                    return ListView(
+                      children: [
+                        titleRow(
+                            text: 'Recent Posts',
+                            list: homeProvider.recentPosts),
+                        PostList(list: homeProvider.recentPosts),
+                        // titleRow(text: 'Most Likes', list: homeProvider.recentPosts),
+                        // PostList(list: _mostLikedPosts),
+                        // titleRow(text: 'Near You', list: homeProvider.recentPosts),
+                        // PostList(list: _nearYouPosts),
+                      ],
+                    );
+                  },
+                ),
+              );
+          }),
     );
   }
-  
+
   titleRow({text, list}) {
     return Padding(
       padding: EdgeInsets.symmetric(vertical: 8),
@@ -62,7 +81,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 onPressed: () {
                   Navigator.of(context).pushNamed(
                     ShowMoreScreen.routeName,
-                    arguments: {'list': list, 'text': text},
+                    arguments: {'list': list, 'title': text},
                   );
                 },
                 child: Text('show more >>')),

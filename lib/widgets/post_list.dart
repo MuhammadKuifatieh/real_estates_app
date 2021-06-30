@@ -3,18 +3,19 @@ import 'package:carousel_slider/carousel_slider.dart';
 import 'package:provider/provider.dart';
 
 import '../models/post.dart';
+import '../models/house.dart';
 import '../widgets/post_widget.dart';
 import '../screens/post_detail_screen.dart';
 import '../providers/home_provier.dart';
 
 class PostList extends StatelessWidget {
-  final List<Post> list;
+  final List<House> list;
   PostList({this.list});
 
   @override
   Widget build(BuildContext context) {
-    final _homeProvider = Provider.of<HomeProvider>(context, listen: false);
-    final user = _homeProvider.user;
+    // final _homeProvider = Provider.of<HomeProvider>(context, listen: false);
+    // final user = _homeProvider.user;
     return CarouselSlider.builder(
       itemCount: list.length,
       itemBuilder: (context, index, _) {
@@ -23,16 +24,16 @@ class PostList extends StatelessWidget {
             Navigator.of(context).pushNamed(
               PostDetailScreen.routeName,
               arguments: {
-                'post': list[index],
+                'house': list[index],
               },
             );
           },
           child: PostWidget(
-            commentsCount: list[index].likesCount,
-            imageUrl: list[index].mainImageUrl,
-            likesCount: list[index].likesCount,
-            location: list[index].location,
-            title: '${user.firstName} ${user.lastName}',
+            commentsCount: list[index].countcomments,
+            imageUrl: list[index].baseImage,
+            likesCount: list[index].countlikes,
+            location: list[index].streetAddress,
+            title: list[index].user.name,
           ),
         );
       },

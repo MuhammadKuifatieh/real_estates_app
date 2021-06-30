@@ -24,7 +24,7 @@ class _PostWidgetState extends State<PostWidget> {
       children: [
         Container(
           margin: EdgeInsets.all(10.0),
-          width: MediaQuery.of(context).size.width*.8,
+          width: MediaQuery.of(context).size.width * .8,
           decoration: BoxDecoration(
               color: Colors.red,
               borderRadius: BorderRadius.circular(15),
@@ -40,7 +40,7 @@ class _PostWidgetState extends State<PostWidget> {
             borderRadius: BorderRadius.circular(15),
             child: Image(
               height: MediaQuery.of(context).size.width,
-              image: AssetImage(widget.imageUrl),
+              image: NetworkImage(widget.imageUrl),
               fit: BoxFit.cover,
             ),
           ),
@@ -51,7 +51,7 @@ class _PostWidgetState extends State<PostWidget> {
           left: 10,
           child: Container(
             padding: EdgeInsets.all(5),
-          width: MediaQuery.of(context).size.width*.8,
+            width: MediaQuery.of(context).size.width * .8,
             decoration: BoxDecoration(
               borderRadius: BorderRadius.only(
                   bottomLeft: Radius.circular(15),

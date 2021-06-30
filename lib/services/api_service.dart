@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:developer';
 
 import 'package:flutter/foundation.dart';
 import 'package:http/http.dart' as http;
@@ -7,7 +8,7 @@ import './api.dart';
 
 class APIService {
   final API api = API();
-  var headers = {
+  var authHeaders = {
     'Content-Type': 'application/json',
     'Accept': 'application/json'
   };
@@ -18,7 +19,7 @@ class APIService {
       @required String name}) {
     return http.post(
       api.authUri('register'),
-      headers: headers,
+      headers: authHeaders,
       body: json.encode(
         {
           'name': name,
@@ -37,7 +38,7 @@ class APIService {
       {@required String email, @required String password}) {
     return http.post(
       api.authUri('login'),
-      headers: headers,
+      headers: authHeaders,
       body: json.encode(
         {
           'email': email,
@@ -45,5 +46,26 @@ class APIService {
         },
       ),
     );
+  }
+
+  Future<Map<String, dynamic>> getRecentHouses(
+      {@required int page, @required String token}) async {
+    var responseData;
+    try {
+      final response = await http.get(
+        api.recentHousesUri(page.toString()),
+        headers: {
+          'Content-Type': 'application/json',
+          'Accept': 'application/json',
+          'Authorization': 'Bearer $token'
+        },
+      );
+      responseData = json.decode(response.body) as Map<String, dynamic>;
+    } catch (error) {
+      // log(error.toString());
+      throw error;
+    }
+    // log(responseData.toString());
+    return responseData;
   }
 }
