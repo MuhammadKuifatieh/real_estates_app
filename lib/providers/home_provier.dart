@@ -259,7 +259,7 @@ class HomeProvider with ChangeNotifier {
       }
       // log(newItems.toString());
       lastPage = jsonMap['lastPage'];
-      // log(newItems.toString());
+      log(newItems.toString());
       if (newItems.length == 0) pagingController.appendLastPage(newItems);
       final nextPageKey = pageKey + 1;
       log(newItems.toString());

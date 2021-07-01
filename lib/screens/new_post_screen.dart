@@ -1,4 +1,5 @@
 // import 'dart:developer';
+import 'dart:developer';
 import 'dart:io';
 import 'dart:math';
 
@@ -39,8 +40,6 @@ class _NewPostScreenState extends State<NewPostScreen> {
   void _saveForm() async {
     if (!_formKey.currentState.validate()) return;
     _formKey.currentState.save();
-    authData['base_image'] = urlMain;
-    authData['other_image'] = urlImages;
     authData['bedrooms'] = int.parse(badRoomsNum);
     authData['bathrooms'] = int.parse(bathRoomsNum);
     authData['floors'] = int.parse(floorsNum);
@@ -245,7 +244,11 @@ class _NewPostScreenState extends State<NewPostScreen> {
                     alignment: Alignment.centerLeft,
                     width: size.width * 0.9,
                     child: TextButton(
-                      onPressed: () {},
+                      onPressed: () {
+                        double result = getPriceEstimates();
+                        print(result.toString());
+                        _priceController.text = result.toString();
+                      },
                       child: Text('Estimate your house price'),
                       style: TextButton.styleFrom(
                         textStyle: TextStyle(
@@ -419,7 +422,10 @@ class _NewPostScreenState extends State<NewPostScreen> {
                     width: size.width * 0.5,
                     height: 50,
                     child: ElevatedButton(
-                      onPressed: _saveForm,
+                      onPressed: () {
+                        _saveForm();
+                        Navigator.of(context).pop();
+                      },
                       child: Text(
                         'POST',
                         style: TextStyle(
@@ -499,25 +505,36 @@ class _NewPostScreenState extends State<NewPostScreen> {
   static const meanYrRenovated = 84.402;
   static const meanSqftLiving15 = 1986.552;
   static const meanYrSqftLot15 = 12768.456;
+  static const meanSqftliving = 12768.456;
+  static const meanFloors = 2.0;
+  static const meanSqftAbove = 12768.456;
+  static const meanYrBasement = 12768.456;
+  static const meanzipcode = 127685.456;
+  static const meanLat = 128.456;
+  static const meanLong = 168.456;
+  static const meanBedrooms = 2.0;
+  static const meanBathRooms = 2.0;
+
   double getPriceEstimates(
-      {@required int Bedrooms,
-      @required int Bathrooms,
-      @required int SqftLiving,
-      @required int floors,
+      {double Bedrooms = meanBedrooms,
+      double Bathrooms = meanBathRooms,
+      double SqftLiving = meanSqftliving,
+      double floors = meanFloors,
       double WaterFront = meanWaterFront,
       double View = meanView,
       double SqftLot = meanSqftLot,
       double Condition = meanCondition,
       double Grade = meanGrade,
-      @required int SqftAbove,
-      @required int SqftBasement,
+      double SqftAbove = meanSqftAbove,
+      double SqftBasement = meanYrBasement,
       double YrBuilt = meanYrBuilt,
       double YearRenovated = meanYrRenovated,
-      @required int Zipcode,
-      @required int Lat,
-      @required int Long,
+      double Zipcode = meanzipcode,
+      double Lat = meanLat,
+      double Long = meanLong,
       double SqftLiving15 = meanSqftLiving15,
       double SqftLot15 = meanYrSqftLot15}) {
+    print("object");
     double logEstimates = -0.012 * Bedrooms +
         0.071 * Bathrooms +
         0.000 * SqftLiving +
