@@ -45,9 +45,9 @@ class _NewPostScreenState extends State<NewPostScreen> {
     authData['floors'] = int.parse(floorsNum);
     await Provider.of<HomeProvider>(context, listen: false)
         .storeHouse(3, authData);
-    log(authData.toString());
-    log(urlMain);
-    log(urlImages.toString());
+    // log(authData.toString());
+    // log(urlMain);
+    // log(urlImages.toString());
   }
 
   @override
@@ -488,4 +488,24 @@ class _NewPostScreenState extends State<NewPostScreen> {
       ),
     );
   }
+
+  getPriceEstimates(
+      {double thetaBedrooms,
+      double thetaBathrooms,
+      double thetaSqftLiving,
+      double thetafloors,
+      double thetaWaterFront,
+      double thetaView,
+      double thetaSqftLot,
+      double thetaCondition,
+      double thetaGrade,
+      double thetaSqftAbove,
+      double thetaSqftBasement,
+      double thetaYrBuilt,
+      double thetaYearRenovated,
+      double thetaZipcode,
+      double thetaLat,
+      double thetaLong,
+      double thetaSqftLiving15,
+      double thetaSqftLot15}) {}
 }
