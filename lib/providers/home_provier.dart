@@ -3,6 +3,7 @@ import 'dart:developer';
 import 'package:flutter/cupertino.dart';
 
 import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
+import 'package:real_estates_app/models/region.dart';
 
 import '../models/post.dart';
 // import '../models/user.dart';
@@ -18,6 +19,7 @@ class HomeProvider with ChangeNotifier {
   var _mostLikedPosts;
   var _nearYouPosts;
   var _myLikedPosts;
+  List<Region> _regions = [];
 
   final apiService = APIService();
   // final User user = User(
@@ -32,6 +34,7 @@ class HomeProvider with ChangeNotifier {
   List<House> get mostLikedPosts => [..._mostLikedPosts];
   List<House> get myLikedPosts => [..._myLikedPosts];
   List<House> get nearYouPosts => [..._nearYouPosts];
+  List<Region> get region => [..._regions];
 
   Future<void> fetchRecentNewPage(
       int pageKey, PagingController<int, House> pagingController) async {
@@ -184,7 +187,7 @@ class HomeProvider with ChangeNotifier {
       // log(newItems.toString());
       lastPage = jsonMap['lastPage'];
       // log(newItems.toString());
-      if (newItems.length== 0) pagingController.appendLastPage(newItems);
+      if (newItems.length == 0) pagingController.appendLastPage(newItems);
       final nextPageKey = pageKey + 1;
       log(newItems.toString());
       pagingController.appendPage(newItems, nextPageKey);
@@ -223,6 +226,63 @@ class HomeProvider with ChangeNotifier {
 
   storedisLike(houseId) async {
     await apiService.addDisLike(houseId: houseId, token: token);
+    notifyListeners();
+  }
+
+  fetchRegion() async {
+    final responseMap = await apiService.getAllRegions(token: token);
+    // log(responseMap.toString());
+
+    final recnetList = responseMap['data'];
+    List<Region> loadedList = [];
+    for (var item in recnetList) {
+      loadedList.add(Region.fromJson(item));
+    }
+    log(loadedList.toString());
+    _regions = loadedList;
+    notifyListeners();
+  }
+
+  Future<void> fetchRegionNewPage(int pageKey,
+      PagingController<int, House> pagingController, int regionId) async {
+    try {
+      log('enter fetch');
+      final jsonMap = await apiService.getHousesInRegion(
+          regionId: regionId, page: pageKey, token: token);
+      final listItems = jsonMap['data'];
+      // final newItems = listItems
+      //     .map((object) => House.fromJson(object))
+      //     .toList() as List<House>;H
+      List<House> newItems = [];
+      for (var item in listItems) {
+        newItems.add(House.fromJson(item));
+      }
+      // log(newItems.toString());
+      lastPage = jsonMap['lastPage'];
+      // log(newItems.toString());
+      if (newItems.length == 0) pagingController.appendLastPage(newItems);
+      final nextPageKey = pageKey + 1;
+      log(newItems.toString());
+      pagingController.appendPage(newItems, nextPageKey);
+      // log(newItems.toString());
+    } catch (error) {
+      pagingController.error = error;
+      log(error.toString());
+    }
+  }
+
+  Future<void> fetchRegionFirstPage(int regionId) async {
+    // log('fetching');
+    // log(token);
+    final responseMap = await apiService.getHousesInRegion(
+        regionId: regionId, page: 1, token: token);
+    // log(responseMap.toString());
+
+    final recnetList = responseMap['data'];
+    final loadedList =
+        recnetList.map((entry) => House.fromJson(entry)).toList();
+    // log(loadedList.toString());
+    _mostLikedPosts = loadedList;
     notifyListeners();
   }
 }

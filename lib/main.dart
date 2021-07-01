@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:real_estates_app/models/house.dart';
+import 'package:real_estates_app/screens/home_region_screen.dart';
 
 import './screens/home_screen.dart';
 // import './screens/post_screen.dart';
@@ -71,6 +72,7 @@ class MyApp extends StatelessWidget {
             PostDetailScreen.routeName: (context) => PostDetailScreen(),
             NewPostScreen.routeName: (context) => NewPostScreen(),
             CommentScreen.routeName: (context) => CommentScreen(),
+            HomeRegionScreen.roueName: (context) => HomeRegionScreen(),
           },
         ),
       ),
