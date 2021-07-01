@@ -6,13 +6,16 @@ class PostWidget extends StatefulWidget {
   final int commentsCount;
   final String location;
   final String imageUrl;
+  final bool isLiked;
 
-  PostWidget(
-      {@required this.commentsCount,
-      @required this.likesCount,
-      @required this.location,
-      @required this.title,
-      @required this.imageUrl});
+  PostWidget({
+    @required this.commentsCount,
+    @required this.likesCount,
+    @required this.location,
+    @required this.title,
+    @required this.imageUrl,
+    @required this.isLiked,
+  });
   @override
   _PostWidgetState createState() => _PostWidgetState();
 }
@@ -84,7 +87,9 @@ class _PostWidgetState extends State<PostWidget> {
                     Row(
                       children: [
                         Icon(
-                          Icons.favorite,
+                          (widget.isLiked)
+                              ? Icons.favorite
+                              : Icons.favorite_border,
                           color: Colors.red,
                         ),
                         Text(widget.likesCount.toString()),

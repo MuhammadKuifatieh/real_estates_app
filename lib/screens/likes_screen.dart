@@ -40,7 +40,7 @@ class _LikesScreenState extends State<LikesScreen> {
   void didChangeDependencies() {
     _pagingController.addPageRequestListener((pageKey) {
       Provider.of<HomeProvider>(context, listen: false)
-          .fetchRecentNewPage(pageKey, _pagingController);
+          .fetchMytLikeNewPage(pageKey, _pagingController);
     });
     super.didChangeDependencies();
   }

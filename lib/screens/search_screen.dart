@@ -28,8 +28,8 @@ class _SearchScreenState extends State<SearchScreen> {
                   borderRadius: BorderRadius.circular(20),
                   gradient: LinearGradient(
                       colors: [
-                        colors[index%4].withOpacity(0.8),
-                       colors[index%4]
+                        colors[index % 4].withOpacity(0.8),
+                        colors[index % 4]
                       ],
                       begin: Alignment.topLeft,
                       end: Alignment.bottomRight,
@@ -39,13 +39,25 @@ class _SearchScreenState extends State<SearchScreen> {
                     crossAxisAlignment: CrossAxisAlignment.center,
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      Text('fuck'),
+                      Text(
+                        'fuck',
+                        style: TextStyle(
+                            fontSize: 18, fontWeight: FontWeight.bold),
+                      ),
                     ])),
           ),
         );
       },
       staggeredTileBuilder: (index) {
-        return StaggeredTile.count(1, index.isEven ? .8 :(index%3==0)? 1:(index%4==0)?0.5 :.4);
+        return StaggeredTile.count(
+            1,
+            (index % 4 == 0)
+                ? .8
+                : (index % 3 == 0)
+                    ? 1
+                    : (index % 2 == 0)
+                        ? 0.6
+                        : .5);
       },
       itemCount: 10,
     ));

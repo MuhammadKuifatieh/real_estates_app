@@ -17,6 +17,8 @@ class HomeProvider with ChangeNotifier {
   var _recentPosts;
   var _mostLikedPosts;
   var _nearYouPosts;
+  var _myLikedPosts;
+
   final apiService = APIService();
   // final User user = User(
   //   email: 'a7madsi15@gmail.com',
@@ -28,6 +30,7 @@ class HomeProvider with ChangeNotifier {
   // );
   List<House> get recentPosts => [..._recentPosts];
   List<House> get mostLikedPosts => [..._mostLikedPosts];
+  List<House> get myLikedPosts => [..._myLikedPosts];
   List<House> get nearYouPosts => [..._nearYouPosts];
 
   Future<void> fetchRecentNewPage(
@@ -164,9 +167,62 @@ class HomeProvider with ChangeNotifier {
     await fetchMostLikeFirstPage();
   }
 
+  Future<void> fetchMytLikeNewPage(
+      int pageKey, PagingController<int, House> pagingController) async {
+    try {
+      log('enter fetch');
+      final jsonMap =
+          await apiService.getUserLikedHouses(page: pageKey, token: token);
+      final listItems = jsonMap['data'];
+      // final newItems = listItems
+      //     .map((object) => House.fromJson(object))
+      //     .toList() as List<House>;H
+      List<House> newItems = [];
+      for (var item in listItems) {
+        newItems.add(House.fromJson(item));
+      }
+      // log(newItems.toString());
+      lastPage = jsonMap['lastPage'];
+      // log(newItems.toString());
+      if (newItems.length== 0) pagingController.appendLastPage(newItems);
+      final nextPageKey = pageKey + 1;
+      log(newItems.toString());
+      pagingController.appendPage(newItems, nextPageKey);
+      // log(newItems.toString());
+    } catch (error) {
+      pagingController.error = error;
+      log(error.toString());
+    }
+  }
+
+  Future<void> fetchMyLikeFirstPage() async {
+    // log('fetching');
+    // log(token);
+    final responseMap =
+        await apiService.getUserLikedHouses(page: 1, token: token);
+    // log(responseMap.toString());
+
+    final recnetList = responseMap['data'];
+    final loadedList =
+        recnetList.map((entry) => House.fromJson(entry)).toList();
+    // log(loadedList.toString());
+    _mostLikedPosts = loadedList;
+    notifyListeners();
+  }
+
   storeHouse(int regionId, Map<String, dynamic> houseMap) async {
     // House house = House.fromJson(houseMap);
     await apiService.storeHouseInRegion(
         regionId: regionId, token: token, house: houseMap);
+  }
+
+  storeLike(houseId) async {
+    await apiService.addLike(houseId: houseId, token: token);
+    notifyListeners();
+  }
+
+  storedisLike(houseId) async {
+    await apiService.addDisLike(houseId: houseId, token: token);
+    notifyListeners();
   }
 }

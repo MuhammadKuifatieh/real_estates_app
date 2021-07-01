@@ -3,13 +3,15 @@
 //     final House = HouseFromJson(jsonString);
 
 import 'dart:convert';
+import 'package:flutter/cupertino.dart';
+
 import '../models/user.dart';
 
 House houseFromJson(String str) => House.fromJson(json.decode(str));
 
 String houseToJson(House data) => json.encode(data.toJson());
 
-class House {
+class House with ChangeNotifier {
   House({
     this.id,
     this.description,
@@ -123,4 +125,8 @@ class House {
         "countcomments": countcomments,
         "user": user.toJson(),
       };
+  changeLike() {
+    isliked = !isliked;
+    notifyListeners();
+  }
 }

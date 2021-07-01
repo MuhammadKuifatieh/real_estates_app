@@ -34,6 +34,7 @@ class PostList extends StatelessWidget {
             likesCount: list[index].countlikes,
             location: list[index].streetAddress,
             title: list[index].user.name,
+            isLiked: list[index].isliked,
           ),
         );
       },

@@ -295,7 +295,7 @@ class APIService {
     return responseData;
   }
 
-  Future<Map<String, dynamic>> addLike(
+  Future<String> addLike(
       {@required int houseId, @required String token}) async {
     var responseData;
     try {
@@ -307,7 +307,7 @@ class APIService {
           'Authorization': 'Bearer $token'
         },
       );
-      responseData = json.decode(response.body) as Map<String, dynamic>;
+      responseData = json.decode(response.body) as String;
     } catch (error) {
       // log(error.toString());
       throw error;
@@ -316,11 +316,11 @@ class APIService {
     return responseData;
   }
 
-  Future<Map<String, dynamic>> addDisLike(
+  Future<String> addDisLike(
       {@required int houseId, @required String token}) async {
     var responseData;
     try {
-      final response = await http.post(
+      final response = await http.delete(
         api.dislikeStore(houseId.toString()),
         headers: {
           'Content-Type': 'application/json',
@@ -328,7 +328,7 @@ class APIService {
           'Authorization': 'Bearer $token'
         },
       );
-      responseData = json.decode(response.body) as Map<String, dynamic>;
+      responseData = json.decode(response.body) as String;
     } catch (error) {
       // log(error.toString());
       throw error;

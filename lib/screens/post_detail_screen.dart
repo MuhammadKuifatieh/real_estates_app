@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:real_estates_app/providers/home_provier.dart';
 
 import '../widgets/movie_detail_header.dart';
 import '../widgets/description_widget.dart';
@@ -22,10 +24,11 @@ class _PostDetailScreenState extends State<PostDetailScreen> {
 
   @override
   void didChangeDependencies() {
-    flag = false;
     argArray =
         ModalRoute.of(context).settings.arguments as Map<String, dynamic>;
     house = argArray['house'];
+    flag = house.isliked;
+
     super.didChangeDependencies();
   }
 
@@ -81,11 +84,24 @@ class _PostDetailScreenState extends State<PostDetailScreen> {
                     IconButton(
                       iconSize: 50,
                       icon: Icon(
-                        Icons.favorite_border_outlined,
+                        (house.isliked)
+                            ? Icons.favorite
+                            : Icons.favorite_border_outlined,
                         color: Theme.of(context).errorColor,
                       ),
                       onPressed: () {
-                        setState(() {});
+                        setState(() {
+                          if (!house.isliked) {
+                            Provider.of<HomeProvider>(context, listen: false)
+                                .storeLike(house.id);
+                            house.countlikes += 1;
+                          } else {
+                            Provider.of<HomeProvider>(context, listen: false)
+                                .storedisLike(house.id);
+                            house.countlikes -= 1;
+                          }
+                          house.isliked = !house.isliked;
+                        });
                       },
                     ),
                     Text(

@@ -81,7 +81,7 @@ class _NewPostWidgetState extends State<NewPostWidget> {
                             GestureDetector(
                               onTap: () {},
                               child: Icon(
-                                Icons.favorite_border_outlined,
+                                (widget.house.isliked)?Icons.favorite:Icons.favorite_border_outlined,
                                 color: Colors.blue,
                               ),
                             ),
