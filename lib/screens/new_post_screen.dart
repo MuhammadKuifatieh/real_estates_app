@@ -1,5 +1,6 @@
-import 'dart:developer';
+// import 'dart:developer';
 import 'dart:io';
+import 'dart:math';
 
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
@@ -489,23 +490,53 @@ class _NewPostScreenState extends State<NewPostScreen> {
     );
   }
 
-  getPriceEstimates(
-      {double thetaBedrooms,
-      double thetaBathrooms,
-      double thetaSqftLiving,
-      double thetafloors,
-      double thetaWaterFront,
-      double thetaView,
-      double thetaSqftLot,
-      double thetaCondition,
-      double thetaGrade,
-      double thetaSqftAbove,
-      double thetaSqftBasement,
-      double thetaYrBuilt,
-      double thetaYearRenovated,
-      double thetaZipcode,
-      double thetaLat,
-      double thetaLong,
-      double thetaSqftLiving15,
-      double thetaSqftLot15}) {}
+  static const meanSqftLot = 15106.968;
+  static const meanWaterFront = 0.008;
+  static const meanView = 0.234;
+  static const meanCondition = 3.409;
+  static const meanGrade = 7.657;
+  static const meanYrBuilt = 1971.005;
+  static const meanYrRenovated = 84.402;
+  static const meanSqftLiving15 = 1986.552;
+  static const meanYrSqftLot15 = 12768.456;
+  double getPriceEstimates(
+      {@required int Bedrooms,
+      @required int Bathrooms,
+      @required int SqftLiving,
+      @required int floors,
+      double WaterFront = meanWaterFront,
+      double View = meanView,
+      double SqftLot = meanSqftLot,
+      double Condition = meanCondition,
+      double Grade = meanGrade,
+      @required int SqftAbove,
+      @required int SqftBasement,
+      double YrBuilt = meanYrBuilt,
+      double YearRenovated = meanYrRenovated,
+      @required int Zipcode,
+      @required int Lat,
+      @required int Long,
+      double SqftLiving15 = meanSqftLiving15,
+      double SqftLot15 = meanYrSqftLot15}) {
+    double logEstimates = -0.012 * Bedrooms +
+        0.071 * Bathrooms +
+        0.000 * SqftLiving +
+        0.000 * SqftLot +
+        0.073 * floors +
+        0.367 * WaterFront +
+        0.058 * View +
+        0.063 * Condition +
+        0.158 * Grade +
+        0.000 * SqftAbove +
+        0.000 * SqftBasement +
+        (-0.003) * meanYrBuilt +
+        0.000 * meanYrRenovated +
+        -0.001 * Zipcode +
+        1.405 * Lat +
+        (-0.178) * Long +
+        0.000 * meanSqftLiving15 +
+        0.000 * SqftLot15;
+    const double e = 2.718281828459045;
+    return pow(e, logEstimates);
+  }
 }
