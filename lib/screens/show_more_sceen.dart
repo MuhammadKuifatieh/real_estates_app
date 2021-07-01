@@ -52,14 +52,26 @@ class _ShowMoreScreenState extends State<ShowMoreScreen> {
 
   @override
   void didChangeDependencies() {
-    _pagingController.addPageRequestListener((pageKey) {
-      Provider.of<HomeProvider>(context, listen: false)
-          .fetchNewPage(pageKey, _pagingController);
-    });
     argArray =
         ModalRoute.of(context).settings.arguments as Map<String, dynamic>;
     // list = argArray['list'];
     title = argArray['title'];
+    if (title == 'Recent Posts') {
+      _pagingController.addPageRequestListener((pageKey) {
+        Provider.of<HomeProvider>(context, listen: false)
+            .fetchRecentNewPage(pageKey, _pagingController);
+      });
+    }
+    if (title == 'Most Likes')
+      _pagingController.addPageRequestListener((pageKey) {
+        Provider.of<HomeProvider>(context, listen: false)
+            .fetchMostLikeNewPage(pageKey, _pagingController);
+      });
+    if (title == 'Near You')
+      _pagingController.addPageRequestListener((pageKey) {
+        Provider.of<HomeProvider>(context, listen: false)
+            .fetchNearestNewPage(pageKey, _pagingController);
+      });
     super.didChangeDependencies();
   }
 

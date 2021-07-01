@@ -3,17 +3,18 @@ import 'package:flutter/material.dart';
 class DropDownCard<T> extends StatefulWidget {
   final List<T> dropList;
   final String title;
-  DropDownCard({this.dropList, this.title});
+  T dropDownValue;
+  DropDownCard({this.dropList, this.title, this.dropDownValue});
   @override
   _DropDownCardState<T> createState() => _DropDownCardState<T>();
 }
 
 class _DropDownCardState<T> extends State<DropDownCard> {
-  var dropDownValue;
+  T value;
   @override
   void initState() {
     super.initState();
-    dropDownValue = widget.dropList[0];
+    value = widget.dropList[0];
   }
 
   @override
@@ -48,7 +49,7 @@ class _DropDownCardState<T> extends State<DropDownCard> {
               Icons.keyboard_arrow_down,
               color: Theme.of(context).primaryColor,
             ),
-            value: dropDownValue,
+            value: value,
             iconSize: 24,
             elevation: 16,
             underline: Container(
@@ -65,7 +66,8 @@ class _DropDownCardState<T> extends State<DropDownCard> {
                 .toList(),
             onChanged: (newValue) {
               setState(() {
-                dropDownValue = newValue;
+                widget.dropDownValue = newValue;
+                value = newValue;
               });
             },
           ),

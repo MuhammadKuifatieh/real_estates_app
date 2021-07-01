@@ -26,7 +26,7 @@ class _PostWidgetState extends State<PostWidget> {
           margin: EdgeInsets.all(10.0),
           width: MediaQuery.of(context).size.width * .8,
           decoration: BoxDecoration(
-              color: Colors.red,
+              color: Theme.of(context).primaryColor,
               borderRadius: BorderRadius.circular(15),
               boxShadow: [
                 BoxShadow(

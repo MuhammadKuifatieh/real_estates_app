@@ -16,14 +16,14 @@ class HomeScreen extends StatefulWidget {
 class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
-    final _homeProvider = Provider.of<HomeProvider>(context, listen: false);
+    // final _homeProvider = Provider.of<HomeProvider>(context, listen: false);
     // final _recentList = _homeProvider.recentPosts;
-    final _mostLikedPosts = _homeProvider.mostLikedPosts;
-    final _nearYouPosts = _homeProvider.nearYouPosts;
+    // final _mostLikedPosts = _homeProvider.mostLikedPosts;
+    // final _nearYouPosts = _homeProvider.nearYouPosts;
     return Scaffold(
       body: FutureBuilder(
-          future: Provider.of<HomeProvider>(context, listen: false)
-              .fetchFirstPage(),
+          future:
+              Provider.of<HomeProvider>(context, listen: false).fetchFirstAll(),
           builder: (context, snapshot) {
             if (snapshot.connectionState == ConnectionState.waiting)
               return Center(

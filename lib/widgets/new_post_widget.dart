@@ -6,7 +6,6 @@ import '../models/house.dart';
 class NewPostWidget extends StatefulWidget {
   House house;
   NewPostWidget(this.house);
-
   @override
   _NewPostWidgetState createState() => _NewPostWidgetState();
 }

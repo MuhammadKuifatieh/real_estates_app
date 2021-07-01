@@ -1,8 +1,13 @@
+import 'dart:developer';
 import 'dart:io';
 
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:provider/provider.dart';
+import 'package:real_estates_app/models/house.dart';
+import 'package:real_estates_app/providers/home_provier.dart';
+import 'package:real_estates_app/services/api_service.dart';
 
 import '../widgets/my_app_bar.dart';
 import '../widgets/drop_down_card.dart';
@@ -18,12 +23,33 @@ class _NewPostScreenState extends State<NewPostScreen> {
   final _priceController = TextEditingController();
   final _latController = TextEditingController();
   final _longController = TextEditingController();
+  final _formKey = GlobalKey<FormState>();
+  Map<String, dynamic> authData = {};
   Size size;
   Color primaryColor;
   List<FilePickerResult> images = [];
   List<String> urlImages = [];
   FilePickerResult image;
   String urlMain;
+  String badRoomsNum;
+  String bathRoomsNum;
+  String floorsNum;
+
+  void _saveForm() async {
+    if (!_formKey.currentState.validate()) return;
+    _formKey.currentState.save();
+    authData['base_image'] = urlMain;
+    authData['other_image'] = urlImages;
+    authData['bedrooms'] = int.parse(badRoomsNum);
+    authData['bathrooms'] = int.parse(bathRoomsNum);
+    authData['floors'] = int.parse(floorsNum);
+    await Provider.of<HomeProvider>(context, listen: false)
+        .storeHouse(3, authData);
+    log(authData.toString());
+    log(urlMain);
+    log(urlImages.toString());
+  }
+
   @override
   void dispose() {
     _priceController.dispose();
@@ -34,6 +60,10 @@ class _NewPostScreenState extends State<NewPostScreen> {
 
   @override
   void initState() {
+    badRoomsNum = '1';
+    bathRoomsNum = '1';
+    floorsNum = '1';
+
     super.initState();
   }
 
@@ -46,7 +76,6 @@ class _NewPostScreenState extends State<NewPostScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final _formKey = GlobalKey<FormState>();
     return Scaffold(
       appBar: MyAppBar(
         context: context,
@@ -68,10 +97,12 @@ class _NewPostScreenState extends State<NewPostScreen> {
                     DropDownCard<String>(
                       dropList: ['1', '2', '3', '4', '5', '6', '7', '8'],
                       title: "Bathrooms",
+                      dropDownValue: bathRoomsNum,
                     ),
                     DropDownCard<String>(
                       dropList: ['1', '2', '3', '4', '5', '6', '7', '8'],
                       title: "Bedrooms",
+                      dropDownValue: badRoomsNum,
                     )
                   ],
                 ),
@@ -83,6 +114,7 @@ class _NewPostScreenState extends State<NewPostScreen> {
                     DropDownCard<String>(
                       dropList: ['1', '2', '3', '4'],
                       title: "Floors",
+                      dropDownValue: floorsNum,
                     ),
                   ],
                 ),
@@ -95,7 +127,7 @@ class _NewPostScreenState extends State<NewPostScreen> {
                   child: customTextField(
                       hint: 'Enter the living room area in (sq ft)',
                       label: 'Living room area',
-                      name: 'sqftliving',
+                      name: 'sqft_living',
                       context: context),
                 ),
                 SizedBox(
@@ -105,7 +137,7 @@ class _NewPostScreenState extends State<NewPostScreen> {
                   child: customTextField(
                       hint: 'Enter the basement area in (sq ft)',
                       label: 'Basement area',
-                      name: 'sqftbasement',
+                      name: 'sqft_basement',
                       context: context),
                 ),
                 SizedBox(
@@ -116,7 +148,7 @@ class _NewPostScreenState extends State<NewPostScreen> {
                       hint: 'The area above the ground in (sq ft)',
                       label: 'Above ground area',
                       context: context,
-                      name: 'sqftabove'),
+                      name: 'sqft_above'),
                 ),
                 SizedBox(
                   height: 16,
@@ -138,15 +170,15 @@ class _NewPostScreenState extends State<NewPostScreen> {
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         customTextField(
-                            label: 'Latitude',
+                            label: 'Lattitude',
                             context: context,
-                            name: 'lat',
+                            name: 'lattitude',
                             controller: _latController,
                             widthFraction: 0.4),
                         customTextField(
                             label: 'Longitude',
                             context: context,
-                            name: 'long',
+                            name: 'longitude',
                             controller: _longController,
                             widthFraction: 0.4),
                       ],
@@ -176,7 +208,7 @@ class _NewPostScreenState extends State<NewPostScreen> {
                   child: customTextField(
                       label: 'Streed Adderss',
                       context: context,
-                      name: 'streetAdress',
+                      name: 'street_address',
                       isLetterInput: true,
                       hint: 'Example \"Boston-132Ast\"'),
                 ),
@@ -386,7 +418,7 @@ class _NewPostScreenState extends State<NewPostScreen> {
                     width: size.width * 0.5,
                     height: 50,
                     child: ElevatedButton(
-                      onPressed: () {},
+                      onPressed: _saveForm,
                       child: Text(
                         'POST',
                         style: TextStyle(
@@ -404,49 +436,56 @@ class _NewPostScreenState extends State<NewPostScreen> {
       ),
     );
   }
-}
 
-String notEmptyValidator(String input) {
-  if (input.isEmpty) return "Please provide a value.";
-  return null;
-}
+  String notEmptyValidator(String input) {
+    if (input.isEmpty) return "Please provide a value.";
+    return null;
+  }
 
-Widget customTextField({
-  @required String label,
-  @required BuildContext context,
-  @required String name,
-  String hint = '',
-  double widthFraction = 0.9,
-  bool isLetterInput = false,
-  bool isMultiLine = false,
-  TextEditingController controller,
-}) {
-  return Container(
-    width: MediaQuery.of(context).size.width * widthFraction,
-    child: TextFormField(
-      decoration: InputDecoration(
-        labelText: label,
-        hintText: hint,
-        border: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(5),
+  Widget customTextField({
+    @required String label,
+    @required BuildContext context,
+    @required String name,
+    String hint = '',
+    double widthFraction = 0.9,
+    bool isLetterInput = false,
+    bool isMultiLine = false,
+    TextEditingController controller,
+  }) {
+    return Container(
+      width: MediaQuery.of(context).size.width * widthFraction,
+      child: TextFormField(
+        decoration: InputDecoration(
+          labelText: label,
+          hintText: hint,
+          border: OutlineInputBorder(
+            borderRadius: BorderRadius.circular(5),
+          ),
+          labelStyle: TextStyle(
+            fontWeight: FontWeight.w400,
+            color: Colors.blueGrey,
+          ),
         ),
-        labelStyle: TextStyle(
-          fontWeight: FontWeight.w400,
-          color: Colors.blueGrey,
-        ),
+        validator: notEmptyValidator,
+        controller:
+            (name == 'price' || name == 'lattitude' || name == 'longitude')
+                ? controller
+                : null,
+
+        keyboardType: isLetterInput
+            ? (isMultiLine ? TextInputType.multiline : TextInputType.text)
+            : TextInputType.number,
+        maxLines: isMultiLine ? null : 1,
+        onSaved: (value) {
+          (isLetterInput || name == 'lattitude' || name == 'longitude')
+              ? authData[name] = value
+              : authData[name] = int.parse(value);
+          ;
+        },
+        // inputFormatters: <TextInputFormatter>[
+        //   FilteringTextInputFormatter
+        // ],
       ),
-      validator: notEmptyValidator,
-      controller: (name == 'price' || name == 'lat' || name == 'long')
-          ? controller
-          : null,
-
-      keyboardType: isLetterInput
-          ? (isMultiLine ? TextInputType.multiline : TextInputType.text)
-          : TextInputType.number,
-      maxLines: isMultiLine ? null : 1,
-      // inputFormatters: <TextInputFormatter>[
-      //   FilteringTextInputFormatter
-      // ],
-    ),
-  );
+    );
+  }
 }

@@ -3,17 +3,21 @@ import 'dart:developer';
 import 'dart:io';
 
 import 'package:flutter/foundation.dart';
+import 'package:real_estates_app/models/user_detail.dart';
 // import 'package:flutter/services.dart';
 // import 'package:shared_preferences/shared_preferences.dart';
 
+import '../models/user.dart';
 import '../services/api_service.dart';
 
 class Auth with ChangeNotifier {
   String _token;
+  UserDetail _user;
   final apiSrevice = APIService();
 
   bool get isAuth => _token != null;
   String get token => _token;
+  UserDetail get user => _user;
 
   Future<void> signUp(
       {@required String email,
@@ -49,8 +53,17 @@ class Auth with ChangeNotifier {
     // final prefs = await SharedPreferences.getInstance();
     // prefs.setString('token', _token);
   }
-  logOut(){
-    _token=null;
+
+  fetchUser() async {
+    final response = await apiSrevice.getDetails(token: _token);
+    log(response.toString());
+    final newUser = UserDetail.fromJson(response['user']);
+    _user = newUser;
+    notifyListeners();
+  }
+
+  logOut() {
+    _token = null;
     notifyListeners();
   }
 }

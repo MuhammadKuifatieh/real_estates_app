@@ -1,5 +1,8 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:real_estates_app/models/user_detail.dart';
 
 import '../models/user.dart';
 import '../screens/new_post_screen.dart';
@@ -15,10 +18,18 @@ class ProfileScreen extends StatefulWidget {
 
 class _ProfileScreenState extends State<ProfileScreen> {
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
-
+  UserDetail user;
   @override
   void initState() {
     super.initState();
+  }
+
+  @override
+  void didChangeDependencies() {
+    Provider.of<Auth>(context, listen: false).fetchUser();
+    user = Provider.of<Auth>(context).user;
+    log(user.toString());
+    super.didChangeDependencies();
   }
 
   @override
@@ -58,7 +69,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                       child: Image(
                         height: size.width * 0.325,
                         width: size.width * 0.325,
-                        image: AssetImage('assets/images/profile.jpg'),
+                        image: NetworkImage(user.image),
                         fit: BoxFit.cover,
                       ),
                     ),
@@ -69,7 +80,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
             Padding(
               padding: EdgeInsets.all(15.0),
               child: Text(
-                " widget.user.name",
+                user.name,
                 style: TextStyle(
                   fontSize: 25.0,
                   fontWeight: FontWeight.bold,
@@ -100,7 +111,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                           Theme.of(context).errorColor),
                       elevation: MaterialStateProperty.all(10)),
                   onPressed: () {
-                    Provider.of<Auth>(context,listen: false).logOut();
+                    Provider.of<Auth>(context, listen: false).logOut();
                   },
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.center,

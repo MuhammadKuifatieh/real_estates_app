@@ -35,15 +35,16 @@ class _LikesScreenState extends State<LikesScreen> {
     });
     super.initState();
   }
+
   @override
   void didChangeDependencies() {
-     _pagingController.addPageRequestListener((pageKey) {
+    _pagingController.addPageRequestListener((pageKey) {
       Provider.of<HomeProvider>(context, listen: false)
-          .fetchNewPage(pageKey, _pagingController);
+          .fetchRecentNewPage(pageKey, _pagingController);
     });
     super.didChangeDependencies();
-    
   }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
