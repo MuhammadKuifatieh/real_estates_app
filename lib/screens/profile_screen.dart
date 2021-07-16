@@ -19,6 +19,7 @@ class ProfileScreen extends StatefulWidget {
 class _ProfileScreenState extends State<ProfileScreen> {
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
   UserDetail user;
+  Future<void> myFuture;
   @override
   void initState() {
     super.initState();
@@ -26,8 +27,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
 
   @override
   void didChangeDependencies() {
-    Provider.of<Auth>(context, listen: false).fetchUser();
-    user = Provider.of<Auth>(context).user;
+    myFuture = Provider.of<Auth>(context, listen: false).fetchUser();
     log(user.toString());
     super.didChangeDependencies();
   }
@@ -37,91 +37,108 @@ class _ProfileScreenState extends State<ProfileScreen> {
     Size size = MediaQuery.of(context).size;
     return Scaffold(
       key: _scaffoldKey,
-      body: SingleChildScrollView(
-        child: Column(
-          children: <Widget>[
-            Stack(
-              alignment: Alignment.center,
-              children: <Widget>[
-                ClipPath(
-                  clipper: ProfileClipper(),
-                  child: Image(
-                    height: size.width * .7,
-                    width: double.infinity,
-                    image: AssetImage('assets/images/profile.jpg'),
-                    fit: BoxFit.cover,
-                  ),
-                ),
-                Positioned(
-                  bottom: size.width * .00,
-                  child: Container(
-                    decoration: BoxDecoration(
-                      shape: BoxShape.circle,
-                      boxShadow: [
-                        BoxShadow(
-                          color: Colors.black45,
-                          offset: Offset(0, 2),
-                          blurRadius: 6.0,
+      body: FutureBuilder(
+        future: myFuture,
+        builder: (context, snapshot) {
+          if (snapshot.connectionState == ConnectionState.waiting)
+            return Center(
+              child: CircularProgressIndicator(
+                backgroundColor: Colors.blue,
+              ),
+            );
+          else {
+            user = Provider.of<Auth>(context, listen: false).user;
+            return SingleChildScrollView(
+              child: Column(
+                children: <Widget>[
+                  Stack(
+                    alignment: Alignment.center,
+                    children: <Widget>[
+                      ClipPath(
+                        clipper: ProfileClipper(),
+                        child: Image(
+                          height: size.width * .7,
+                          width: double.infinity,
+                          image: AssetImage('assets/images/cover.jpg'),
+                          fit: BoxFit.cover,
                         ),
-                      ],
-                    ),
-                    child: ClipOval(
-                      child: Image(
-                        height: size.width * 0.325,
-                        width: size.width * 0.325,
-                        image: NetworkImage(user.image),
-                        fit: BoxFit.cover,
+                      ),
+                      Positioned(
+                        bottom: size.width * .00,
+                        child: Container(
+                          decoration: BoxDecoration(
+                            shape: BoxShape.circle,
+                            boxShadow: [
+                              BoxShadow(
+                                color: Colors.black45,
+                                offset: Offset(0, 2),
+                                blurRadius: 6.0,
+                              ),
+                            ],
+                          ),
+                          child: ClipOval(
+                            child: Image(
+                              height: size.width * 0.325,
+                              width: size.width * 0.325,
+                              image: (user.image != null)
+                                  ? NetworkImage(user.image)
+                                  : AssetImage(
+                                      'assets/images/profile_empty.jpg'),
+                              fit: BoxFit.cover,
+                            ),
+                          ),
+                        ),
+                      )
+                    ],
+                  ),
+                  Padding(
+                    padding: EdgeInsets.all(15.0),
+                    child: Text(
+                      user.name,
+                      style: TextStyle(
+                        fontSize: 25.0,
+                        fontWeight: FontWeight.bold,
+                        letterSpacing: 1.5,
                       ),
                     ),
                   ),
-                )
-              ],
-            ),
-            Padding(
-              padding: EdgeInsets.all(15.0),
-              child: Text(
-                user.name,
-                style: TextStyle(
-                  fontSize: 25.0,
-                  fontWeight: FontWeight.bold,
-                  letterSpacing: 1.5,
-                ),
-              ),
-            ),
-            Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  titleRow(text: "My Post"),
-                  PostList(
-                    list: Provider.of<HomeProvider>(context).recentPosts,
+                  Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        titleRow(text: "My Posts"),
+                        PostList(
+                          list: Provider.of<HomeProvider>(context).recentPosts,
+                        ),
+                      ],
+                    ),
                   ),
+                  SizedBox(height: 5.0),
+                  Align(
+                    alignment: Alignment.bottomRight,
+                    child: Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: ElevatedButton(
+                        style: ButtonStyle(
+                            backgroundColor: MaterialStateProperty.all(
+                                Theme.of(context).errorColor),
+                            elevation: MaterialStateProperty.all(10)),
+                        onPressed: () {
+                          Provider.of<Auth>(context, listen: false).logOut();
+                        },
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [Text('Log Out'), Icon(Icons.exit_to_app)],
+                        ),
+                      ),
+                    ),
+                  )
                 ],
               ),
-            ),
-            SizedBox(height: 5.0),
-            Align(
-              alignment: Alignment.bottomRight,
-              child: Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: ElevatedButton(
-                  style: ButtonStyle(
-                      backgroundColor: MaterialStateProperty.all(
-                          Theme.of(context).errorColor),
-                      elevation: MaterialStateProperty.all(10)),
-                  onPressed: () {
-                    Provider.of<Auth>(context, listen: false).logOut();
-                  },
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [Text('Log Out'), Icon(Icons.exit_to_app)],
-                  ),
-                ),
-              ),
-            )
-          ],
-        ),
+            );
+          }
+        },
       ),
     );
   }

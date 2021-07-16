@@ -33,12 +33,15 @@ class MyApp extends StatelessWidget {
         ChangeNotifierProvider<PageIndex>(create: (_) => PageIndex()),
         ChangeNotifierProvider<Auth>(create: (_) => Auth()),
         ChangeNotifierProxyProvider<Auth, HomeProvider>(
-          create: (_) => HomeProvider('', [], 0),
+          create: (_) => HomeProvider('', 0, [], [], [], []),
           update: (_, auth, previousHomeProvider) {
             return HomeProvider(
               auth.token,
-              previousHomeProvider.recentPosts ?? [],
               previousHomeProvider.lastPage,
+              previousHomeProvider.recentPosts ?? [],
+              previousHomeProvider.mostLikedPosts ?? [],
+              previousHomeProvider.nearYouPosts ?? [],
+              previousHomeProvider.myLikedPosts ?? [],
             );
           },
         ),

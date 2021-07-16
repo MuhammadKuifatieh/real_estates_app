@@ -45,7 +45,7 @@ class _MainScreenState extends State<MainScreen> {
           GButton(
             icon: Icons.search,
             iconColor: Theme.of(context).primaryColor,
-            text: 'Search',
+            text: 'Find',
           ),
           GButton(
             icon: Icons.person,
@@ -53,9 +53,9 @@ class _MainScreenState extends State<MainScreen> {
             text: 'Profile',
           )
         ],
-        selectedIndex:Provider.of<PageIndex>(context).pageIndex ,
+        selectedIndex: Provider.of<PageIndex>(context).pageIndex,
         onTabChange: (index) {
-          Provider.of<PageIndex>(context,listen: false).setPageIndex(index);
+          Provider.of<PageIndex>(context, listen: false).setPageIndex(index);
         },
       ),
     );

@@ -72,7 +72,7 @@ class House with ChangeNotifier {
         id: json["id"],
         description: json["description"],
         streetAddress: json["street_address"],
-        price: json["price"].toDouble(),
+        price: (json['price'] != null) ? json["price"].toDouble() : null,
         baseImage: json["base_image"],
         otherImage: List<String>.from(json["other_image"].map((x) => x)),
         bedrooms: json["bedrooms"],

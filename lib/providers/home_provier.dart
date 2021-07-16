@@ -13,12 +13,19 @@ import '../services/api_service.dart';
 
 class HomeProvider with ChangeNotifier {
   final String token;
-  HomeProvider(this.token, this._recentPosts, this.lastPage);
+  HomeProvider(
+    this.token,
+    this.lastPage,
+    this._recentPosts,
+    this._mostLikedPosts,
+    this._nearYouPosts,
+    this._myLikedPosts,
+  );
   int lastPage;
-  var _recentPosts;
-  var _mostLikedPosts;
-  var _nearYouPosts;
-  var _myLikedPosts;
+  List<House> _recentPosts;
+  List<House> _mostLikedPosts;
+  List<House> _nearYouPosts;
+  List<House> _myLikedPosts;
   List<Region> _regions = [];
 
   final apiService = APIService();
@@ -65,17 +72,26 @@ class HomeProvider with ChangeNotifier {
   }
 
   Future<void> fetchRecentFirstPage() async {
-    // log('fetching');
-    // log(token);
-    final responseMap = await apiService.getRecentHouses(page: 1, token: token);
-    // log(responseMap.toString());
+    try {
+      // log('fetching');
+      // log(token);
+      final responseMap =
+          await apiService.getRecentHouses(page: 1, token: token);
+      // log(responseMap.toString());
+      // log('have response\n\n');
 
-    final recnetList = responseMap['data'];
-    final loadedList =
-        recnetList.map((entry) => House.fromJson(entry)).toList();
-    // log(loadedList.toString());
-    _recentPosts = loadedList;
-    notifyListeners();
+      final recnetList = responseMap['data'];
+      final List<House> loadedList = [];
+      // recnetList.map((entry) => House.fromJson(entry)).toList();
+      for (var item in recnetList) loadedList.add(House.fromJson(item));
+      // log("heey endddd\n\n");
+      _recentPosts = loadedList;
+      // log(_recentPosts.toString());
+    } catch (e) {
+      log(e.toString());
+      throw e;
+    }
+    // notifyListeners();
   }
 
   Future<void> fetchMostLikeNewPage(
@@ -107,18 +123,27 @@ class HomeProvider with ChangeNotifier {
   }
 
   Future<void> fetchMostLikeFirstPage() async {
-    // log('fetching');
-    // log(token);
-    final responseMap =
-        await apiService.getMostLikedHouses(page: 1, token: token);
-    // log(responseMap.toString());
+    try {
+      // log('fetching likes');
+      // log(token);
+      final responseMap =
+          await apiService.getMostLikedHouses(page: 1, token: token);
+      // log('likes response');
+      // log(responseMap.toString());
 
-    final recnetList = responseMap['data'];
-    final loadedList =
-        recnetList.map((entry) => House.fromJson(entry)).toList();
-    // log(loadedList.toString());
-    _mostLikedPosts = loadedList;
-    notifyListeners();
+      final recnetList = responseMap['data'];
+      final List<House> loadedList = [];
+      // recnetList.map((entry) => House.fromJson(entry)).toList();
+      for (var item in recnetList) loadedList.add(House.fromJson(item));
+      //  log(loadedList.toString());
+      _mostLikedPosts = loadedList;
+      // notifyListeners();
+
+      // log(_recentPosts.toString());
+      // log('likes ended');
+    } catch (e) {
+      log(e.toString());
+    }
   }
 
   Future<void> fetchNearestNewPage(
@@ -150,24 +175,38 @@ class HomeProvider with ChangeNotifier {
   }
 
   Future<void> fetchNearestFirstPage() async {
-    // log('fetching');
-    // log(token);
-    final responseMap =
-        await apiService.getNearestHouses(page: 1, token: token);
-    // log(responseMap.toString());
+    try {
+      log('fetching nearest');
+      // log(token);
+      final responseMap = await apiService.getNearestHouses(
+          page: 1, token: token, lat: 14.7, long: 44.2);
+      // log(responseMap.toString());
 
-    final recnetList = responseMap['data'];
-    final loadedList =
-        recnetList.map((entry) => House.fromJson(entry)).toList();
-    // log(loadedList.toString());
-    _nearYouPosts = loadedList;
-    notifyListeners();
+      final recnetList = responseMap['data'];
+      final List<House> loadedList = [];
+      // recnetList.map((entry) => House.fromJson(entry)).toList();
+      for (var item in recnetList) loadedList.add(House.fromJson(item));
+      // log(loadedList.toString());
+      _nearYouPosts = loadedList;
+      if (_nearYouPosts == null) _nearYouPosts = [];
+      // notifyListeners();
+      // log(_recentPosts.toString());
+      log('ended nearest');
+    } catch (e) {
+      log(e.toString());
+    }
   }
 
   Future<void> fetchFirstAll() async {
+    log('enter fetch all');
     await fetchRecentFirstPage();
-    await fetchNearestFirstPage();
+    log('fetched recent');
     await fetchMostLikeFirstPage();
+    log('fetched likes');
+    await fetchNearestFirstPage();
+    log('fetched nearest');
+    log('leave fetch all');
+    notifyListeners();
   }
 
   Future<void> fetchMytLikeNewPage(

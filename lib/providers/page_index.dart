@@ -16,7 +16,7 @@ class PageIndex with ChangeNotifier {
   List<String> titles = [
     'Home',
     'Likes',
-    'Search',
+    'Find',
     'profile',
   ];
   Widget get page => pages[_pageIndex];

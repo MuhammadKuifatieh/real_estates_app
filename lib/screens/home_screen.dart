@@ -31,7 +31,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   backgroundColor: Colors.blue,
                 ),
               );
-            else
+            else if (snapshot.connectionState == ConnectionState.done)
               return Container(
                 color: Colors.white,
                 height: MediaQuery.of(context).size.height,
@@ -62,6 +62,12 @@ class _HomeScreenState extends State<HomeScreen> {
                       ],
                     );
                   },
+                ),
+              );
+            else
+              return Center(
+                child: CircularProgressIndicator(
+                  backgroundColor: Colors.blue,
                 ),
               );
           }),
